@@ -40,15 +40,6 @@ const LandingCodigoDaAbundancia = () => {
       if (!res.ok) throw new Error('Erro ao criar preferência');
       const data = await res.json();
 
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
-
-      if (isMobile) {
-        // Mobile: redirect direto — melhor UX, abre app MP se instalado
-        window.location.href = data.init_point;
-        return;
-      }
-
-      // Desktop: abre modal
       const publicKey = import.meta.env.VITE_MP_PUBLIC_KEY;
       const preferenceId = data.preference_id
         ?? new URL(data.init_point).searchParams.get('pref_id');
