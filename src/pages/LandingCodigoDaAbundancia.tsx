@@ -77,7 +77,7 @@ const LandingCodigoDaAbundancia = () => {
       {/* Header: logo menor em mobile */}
       <header className="w-full bg-[#FFB932] border-b border-[#e6a520] shadow-lg shadow-[#FFB932]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-center">
-          <img src="/logo-ecotopia.png" alt="Ecotopia" className="h-16 sm:h-20 w-auto" />
+          <img src="/logo-ecotopia.webp" alt="Ecotopia" className="h-16 sm:h-20 w-auto" />
         </div>
       </header>
 
@@ -129,11 +129,11 @@ const LandingCodigoDaAbundancia = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-8">
               <div className="flex -space-x-2">
                 {[
-                  '/avatar-fernanda.png',
-                  '/avatar-marcos.png',
-                  '/avatar-camila.png',
-                  '/avatar-extra.png',
-                  '/avatar-fernanda.png',
+                  '/avatar-fernanda.webp',
+                  '/avatar-marcos.webp',
+                  '/avatar-camila.webp',
+                  '/avatar-extra.webp',
+                  '/avatar-fernanda.webp',
                 ].map((src, i) => (
                   <img
                     key={i}
@@ -306,13 +306,13 @@ const LandingCodigoDaAbundancia = () => {
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
                 {[
-                  { day: 1, title: 'O Diagnóstico', description: 'Você finalmente vê com clareza os padrões que operam no escuro', img: '/dia1.png' },
-                  { day: 2, title: 'Quebrando o Contrato', description: 'Você desfaz o acordo inconsciente que fez com a escassez', img: '/dia2.png' },
-                  { day: 3, title: 'A Frequência do Receber', description: 'Você abre o canal que estava bloqueado para a abundância entrar', img: '/dia3.png' },
-                  { day: 4, title: 'Você no Futuro Próspero', description: 'Você habita neurologicamente a versão próspera de você mesmo', img: '/dia4.png' },
-                  { day: 5, title: 'Gratidão Como Imã', description: 'Você cria o estado emocional que expande a percepção de oportunidades', img: '/dia5.png' },
-                  { day: 6, title: 'Merecimento Sem Culpa', description: 'Você dissolve a crença mais profunda: a de que não merece', img: '/dia6.png' },
-                  { day: 7, title: 'A Nova Identidade', description: 'Você não tenta mais atrair dinheiro. Você se torna uma pessoa próspera', img: '/dia7.png' },
+                  { day: 1, title: 'O Diagnóstico', description: 'Você finalmente vê com clareza os padrões que operam no escuro', img: '/dia1.webp' },
+                  { day: 2, title: 'Quebrando o Contrato', description: 'Você desfaz o acordo inconsciente que fez com a escassez', img: '/dia2.webp' },
+                  { day: 3, title: 'A Frequência do Receber', description: 'Você abre o canal que estava bloqueado para a abundância entrar', img: '/dia3.webp' },
+                  { day: 4, title: 'Você no Futuro Próspero', description: 'Você habita neurologicamente a versão próspera de você mesmo', img: '/dia4.webp' },
+                  { day: 5, title: 'Gratidão Como Imã', description: 'Você cria o estado emocional que expande a percepção de oportunidades', img: '/dia5.webp' },
+                  { day: 6, title: 'Merecimento Sem Culpa', description: 'Você dissolve a crença mais profunda: a de que não merece', img: '/dia6.webp' },
+                  { day: 7, title: 'A Nova Identidade', description: 'Você não tenta mais atrair dinheiro. Você se torna uma pessoa próspera', img: '/dia7.webp' },
                 ].map((session) => (
                   <div
                     key={session.day}
@@ -373,19 +373,19 @@ const LandingCodigoDaAbundancia = () => {
                 {
                   name: 'Fernanda Rocha, 37',
                   role: 'Nutricionista autônoma · Curitiba',
-                  avatar: '/avatar-fernanda.png',
+                  avatar: '/avatar-fernanda.webp',
                   result: 'Fiz o protocolo sem muita expectativa. No Dia 2, quando ele fala sobre o contrato inconsciente com a escassez, eu chorei. Lembrei da minha mãe dizendo que dinheiro é difícil. Carregava isso há 30 anos. Dois meses depois fechei meu maior contrato — R$4.800 num único cliente.',
                 },
                 {
                   name: 'Marcos Vinícius, 44',
                   role: 'Engenheiro civil · Goiânia',
-                  avatar: '/avatar-marcos.png',
+                  avatar: '/avatar-marcos.webp',
                   result: 'Sou cético por formação. Entrei achando que era autoajuda disfarçada. O que me pegou foi a parte da neuroplasticidade no Dia 1 — fez sentido técnico. Terminei os 7 dias. Não virei milionário, mas tomei uma decisão de investimento que vinha adiando há 2 anos. Pequeno? Talvez. Mas real.',
                 },
                 {
                   name: 'Camila Duarte, 31',
                   role: 'Empreendedora · Florianópolis',
-                  avatar: '/avatar-camila.png',
+                  avatar: '/avatar-camila.webp',
                   result: 'O Dia 6 foi o mais difícil. Merecimento sem culpa. Eu realmente não achava que merecia ganhar mais do que meu pai ganhou a vida inteira. Ouvi essa sessão três vezes. Na terceira, alguma coisa destravou. Reajustei meus preços na semana seguinte — algo que eu nunca tinha conseguido fazer.',
                 },
               ].map((testimonial, index) => (
