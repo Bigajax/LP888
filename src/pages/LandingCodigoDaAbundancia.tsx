@@ -40,17 +40,17 @@ const LandingCodigoDaAbundancia = () => {
       if (!res.ok) throw new Error('Erro ao criar preferência');
       const data = await res.json();
 
-      const preferenceId = data.preference_id;
       const publicKey = import.meta.env.VITE_MP_PUBLIC_KEY;
 
+      // Tenta extrair o pref_id do init_point (ex: ...?pref_id=123-abc)
+      const preferenceId = data.preference_id
+        ?? new URL(data.init_point).searchParams.get('pref_id');
+
       if (preferenceId && publicKey) {
-        // Carrega o SDK do MP se ainda não estiver na página
         await loadMpSdk();
-        // Abre o modal do Checkout Pro
         const mp = new (window as any).MercadoPago(publicKey, { locale: 'pt-BR' });
         mp.checkout({ preference: { id: preferenceId }, autoOpen: true });
       } else if (data.init_point) {
-        // Fallback: redirect direto
         window.location.href = data.init_point;
       } else {
         throw new Error('Resposta inválida do servidor');
