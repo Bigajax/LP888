@@ -35,14 +35,25 @@ const LandingCodigoDaAbundancia = () => {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/mp/create-preference`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productKey: 'protocolo_abundancia_7_dias' }),
+        body: JSON.stringify({ productKey: 'protocolo_abundancia_7_dias', origin: 'landing_page' }),
       });
-      if (!res.ok) throw new Error('Erro ao criar preferência de pagamento');
+      if (!res.ok) throw new Error('Erro ao criar preferência');
       const data = await res.json();
-      if (data.init_point) {
+
+      const preferenceId = data.preference_id;
+      const publicKey = import.meta.env.VITE_MP_PUBLIC_KEY;
+
+      if (preferenceId && publicKey) {
+        // Carrega o SDK do MP se ainda não estiver na página
+        await loadMpSdk();
+        // Abre o modal do Checkout Pro
+        const mp = new (window as any).MercadoPago(publicKey, { locale: 'pt-BR' });
+        mp.checkout({ preference: { id: preferenceId }, autoOpen: true });
+      } else if (data.init_point) {
+        // Fallback: redirect direto
         window.location.href = data.init_point;
       } else {
-        throw new Error('Link de pagamento não encontrado');
+        throw new Error('Resposta inválida do servidor');
       }
     } catch (err) {
       console.error(err);
@@ -50,6 +61,17 @@ const LandingCodigoDaAbundancia = () => {
     } finally {
       setLoadingPayment(false);
     }
+  };
+
+  const loadMpSdk = (): Promise<void> => {
+    if ((window as any).MercadoPago) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://sdk.mercadopago.com/js/v2';
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Falha ao carregar SDK do Mercado Pago'));
+      document.head.appendChild(script);
+    });
   };
 
   const carouselRef = useRef<HTMLDivElement>(null);
