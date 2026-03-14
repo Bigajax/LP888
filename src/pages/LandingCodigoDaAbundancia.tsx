@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { Check, ChevronDown, ChevronRight, ChevronLeft } from 'lucide-react';
+import { useRef, useState, useEffect } from 'react';
+import { Check, ChevronRight, ChevronLeft, Plus } from 'lucide-react';
 
 const TOTAL_PARTICIPANTS = 4247;
 
@@ -7,6 +7,16 @@ const LandingCodigoDaAbundancia = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [loadingPayment, setLoadingPayment] = useState(false);
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
+  const [showStickyBar, setShowStickyBar] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      setShowStickyBar(scrolled > 0.6);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleCheck = (index: number) => {
     setCheckedItems(prev => {
@@ -94,15 +104,15 @@ const LandingCodigoDaAbundancia = () => {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
-      {/* Header: logo menor em mobile */}
+      {/* Header */}
       <header className="w-full bg-[#FFB932] border-b border-[#e6a520] shadow-lg shadow-[#FFB932]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-center">
           <img src="/logo-ecotopia.webp" alt="Ecotopia" className="h-16 sm:h-20 w-auto" />
         </div>
       </header>
 
-      {/* pt-16 mobile (header ~64px), pt-24 sm (header ~88px) */}
       <main>
+        {/* HERO */}
         <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-20 overflow-hidden">
           <div className="absolute inset-0 flex items-center justify-center opacity-10">
             <div className="w-64 h-64 sm:w-96 sm:h-96 animate-spin-slow">
@@ -142,10 +152,10 @@ const LandingCodigoDaAbundancia = () => {
             </h1>
 
             <p className="text-base sm:text-xl text-gray-300 mb-10 sm:mb-12 max-w-3xl mx-auto leading-relaxed">
-              Isso não é falta de disciplina. É o seu cérebro executando um programa instalado há anos — feito para te manter exatamente onde você está.
+              Isso não é falta de disciplina. É um programa que seu cérebro roda no piloto automático — instalado na infância, executado até hoje.
             </p>
 
-            {/* Social proof: empilha em telas muito pequenas */}
+            {/* Social proof */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-8">
               <div className="flex -space-x-2">
                 {[
@@ -168,47 +178,54 @@ const LandingCodigoDaAbundancia = () => {
               </span>
             </div>
 
-            {/* CTA hero: largura total em mobile */}
+            {/* Hero CTA */}
             <button
               onClick={handleCTA}
               disabled={loadingPayment}
-              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-4 bg-[#FFB932] hover:bg-[#FFB932]/90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-base sm:text-lg shadow-lg shadow-[#FFB932]/20 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="cta-btn w-full sm:w-auto group inline-flex items-center justify-center gap-2 py-5 px-8 bg-[#FFB932] hover:bg-[#FFB932]/90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-base sm:text-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               {loadingPayment ? 'Aguarde...' : 'Quero reprogramar minha mente agora → R$ 67'}
             </button>
 
-            <p className="text-xs sm:text-sm text-gray-500 mt-4">
-              Acesso imediato · Pagamento único · Sem mensalidade
+            {/* Garantia badge */}
+            <div className="flex items-center justify-center mt-3" style={{ gap: '6px' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)' }}>Garantia de 7 dias ou seu dinheiro de volta</span>
+            </div>
+
+            <p className="text-xs sm:text-sm text-gray-500 mt-3">
+              Acesso imediato · Pagamento único · Sem mensalidade · Garantia de 7 dias
             </p>
           </div>
         </section>
 
+        {/* CHECKBOXES */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20 bg-gray-900/50">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 text-center">
-              Reconhece alguma dessas situações?
+              Marque o que parece familiar:
             </h2>
-
-            <p className="text-center text-sm text-gray-500 mb-6">Clique nos que se aplicam a você</p>
 
             <div className="space-y-3 sm:space-y-4 mb-8">
               {[
                 'Quando o dinheiro começa a entrar bem, algo sempre aparece para zerar',
-                'Você gasta antes de poupar, como se o dinheiro precisasse sair logo',
+                'Você gasta antes de poupar — como se guardar fosse perigoso',
                 'Você trabalha mais que muita gente que ganha mais que você',
                 'Você sente culpa quando gasta, ansiedade quando poupa',
                 'Você já tentou planilha, curso financeiro, lei da atração — e voltou para o mesmo lugar',
-                'No fundo, você acha que riqueza é para um certo tipo de pessoa. E você não tem certeza se é esse tipo.',
+                'No fundo, uma voz sussurra que abundância não é para você. E você não sabe de onde veio essa voz.',
               ].map((item, index) => {
                 const checked = checkedItems.has(index);
                 return (
                   <button
                     key={index}
                     onClick={() => toggleCheck(index)}
-                    className={`w-full flex gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg transition-all text-left cursor-pointer border ${
+                    className={`w-full flex gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg text-left cursor-pointer border transition-all duration-150 ${
                       checked
                         ? 'bg-[#FFB932]/10 border-[#FFB932]/60'
-                        : 'bg-gray-800/50 border-gray-700/50 hover:border-[#FFB932]/30 hover:bg-gray-800/70'
+                        : 'bg-transparent border-transparent hover:border-[#F5C842]/25 hover:bg-[#F5C842]/[0.04]'
                     }`}
                   >
                     <div className={`flex-shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all mt-0.5 ${
@@ -234,13 +251,13 @@ const LandingCodigoDaAbundancia = () => {
             {checkedItems.size > 0 && (() => {
               const msg = getCounterMessage(checkedItems.size);
               return msg ? (
-                <div className={`text-center py-4 px-6 rounded-lg bg-gray-800/50 border border-[#FFB932]/20 mb-8 transition-all`}>
+                <div className="text-center py-4 px-6 rounded-lg bg-gray-800/50 border border-[#FFB932]/20 mb-8 transition-all">
                   <p className={`text-base sm:text-lg font-medium ${msg.color}`}>{msg.text}</p>
                   {checkedItems.size >= 3 && (
                     <button
                       onClick={handleCTA}
                       disabled={loadingPayment}
-                      className="mt-4 inline-flex items-center gap-2 px-6 py-3 bg-[#FFB932] hover:bg-[#FFB932]/90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-sm sm:text-base shadow-lg shadow-[#FFB932]/20 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                      className="cta-btn mt-4 inline-flex items-center gap-2 py-5 px-8 bg-[#FFB932] hover:bg-[#FFB932]/90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-sm sm:text-base disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
                       {loadingPayment ? 'Aguarde...' : 'Quero reprogramar minha mente agora → R$ 67'}
                     </button>
@@ -251,13 +268,14 @@ const LandingCodigoDaAbundancia = () => {
 
             {checkedItems.size === 0 && (
               <p className="text-base sm:text-lg text-gray-300 leading-relaxed text-center">
-                Se você se reconheceu em qualquer item acima, o problema não é você. É o{' '}
-                <strong className="text-[#FFB932]">termostato financeiro</strong> que opera dentro de você — invisível, automático, e incrivelmente eficaz em te manter no mesmo nível.
+                Se você marcou qualquer item acima, existe uma razão concreta para isso. Não é caráter. Não é inteligência. É um{' '}
+                <strong className="text-[#FFB932]">termostato financeiro</strong> invisível — calibrado errado, operando em silêncio, te mantendo exatamente onde está.
               </p>
             )}
           </div>
         </section>
 
+        {/* FORÇA DE VONTADE */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 text-center">
@@ -267,7 +285,7 @@ const LandingCodigoDaAbundancia = () => {
             <div className="space-y-6 sm:space-y-8 text-base sm:text-lg text-gray-300 leading-relaxed">
               <div className="px-2 sm:px-6 py-2">
                 <p className="mb-4">
-                  Pense num ar condicionado. Você pode abrir a janela, ligar o ventilador, fazer o que for — mas se o termostato estiver configurado para 22°C, o sistema vai trabalhar até voltar para lá.
+                  Pense num ar-condicionado. Você pode abrir todas as janelas, ligar ventiladores, fazer qualquer coisa — mas enquanto o termostato estiver em 22°C, o sistema vai trabalhar para voltar lá. Força de vontade não recalibra termostato. Reprogramação sim.
                 </p>
                 <p>
                   <strong className="text-white">O seu cérebro funciona exatamente assim com dinheiro.</strong> Tem um ponto definido. E quando você começa a ultrapassar esse ponto, o sistema inteiro se ativa para te trazer de volta.
@@ -291,6 +309,7 @@ const LandingCodigoDaAbundancia = () => {
           </div>
         </section>
 
+        {/* PRODUTO */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20 bg-gray-900/50">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-8 sm:mb-12">
@@ -298,7 +317,7 @@ const LandingCodigoDaAbundancia = () => {
                 Código da Abundância
               </h2>
               <p className="text-base sm:text-xl italic text-gray-400">
-                7 sessões de meditação guiada para reprogramar sua identidade financeira
+                7 sessões de áudio. 20 minutos por dia. Reprogramação financeira em profundidade.
               </p>
             </div>
 
@@ -310,7 +329,6 @@ const LandingCodigoDaAbundancia = () => {
 
             {/* Carousel controls */}
             <div className="relative">
-              {/* Left arrow */}
               <button
                 onClick={() => scrollCarousel('left')}
                 className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-[#FFB932] hover:bg-gray-700 transition-colors shadow-lg hidden sm:flex"
@@ -319,15 +337,14 @@ const LandingCodigoDaAbundancia = () => {
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
-              {/* Cards track */}
               <div
                 ref={carouselRef}
                 className="flex gap-4 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
                 {[
-                  { day: 1, title: 'O Diagnóstico', description: 'Você finalmente vê com clareza os padrões que operam no escuro', img: '/dia1.webp' },
-                  { day: 2, title: 'Quebrando o Contrato', description: 'Você desfaz o acordo inconsciente que fez com a escassez', img: '/dia2.webp' },
+                  { day: 1, title: 'O Diagnóstico', description: 'Você finalmente enxerga o padrão que sempre operou no escuro', img: '/dia1.webp' },
+                  { day: 2, title: 'Quebrando o Contrato', description: 'Você desfaz o acordo que fez com a escassez ainda criança', img: '/dia2.webp' },
                   { day: 3, title: 'A Frequência do Receber', description: 'Você abre o canal que estava bloqueado para a abundância entrar', img: '/dia3.webp' },
                   { day: 4, title: 'Você no Futuro Próspero', description: 'Você habita neurologicamente a versão próspera de você mesmo', img: '/dia4.webp' },
                   { day: 5, title: 'Gratidão Como Imã', description: 'Você cria o estado emocional que expande a percepção de oportunidades', img: '/dia5.webp' },
@@ -338,7 +355,6 @@ const LandingCodigoDaAbundancia = () => {
                     key={session.day}
                     className={`group flex-shrink-0 w-56 sm:w-64 rounded-xl border overflow-hidden transition-all snap-start ${getCardBorder(session.day)} ${getCardBg(session.day)}`}
                   >
-                    {/* Image */}
                     <div className="w-full aspect-square overflow-hidden">
                       <img
                         src={session.img}
@@ -346,7 +362,6 @@ const LandingCodigoDaAbundancia = () => {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     </div>
-                    {/* Content */}
                     <div className="p-4">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="w-7 h-7 rounded-md bg-[#FFB932]/20 flex items-center justify-center text-[#FFB932] text-sm font-bold border border-[#FFB932]/30 group-hover:bg-[#FFB932]/30 transition-colors flex-shrink-0">
@@ -362,7 +377,6 @@ const LandingCodigoDaAbundancia = () => {
                 ))}
               </div>
 
-              {/* Right arrow */}
               <button
                 onClick={() => scrollCarousel('right')}
                 className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-[#FFB932] hover:bg-gray-700 transition-colors shadow-lg hidden sm:flex"
@@ -372,7 +386,6 @@ const LandingCodigoDaAbundancia = () => {
               </button>
             </div>
 
-            {/* Mobile swipe hint */}
             <p className="text-center text-xs text-gray-600 mt-1 sm:hidden">← deslize para ver todos os dias →</p>
 
             <p className="text-base sm:text-xl text-gray-300 leading-relaxed mt-10 sm:mt-12 text-center italic">
@@ -382,6 +395,7 @@ const LandingCodigoDaAbundancia = () => {
           </div>
         </section>
 
+        {/* DEPOIMENTOS */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 text-center">
@@ -394,24 +408,37 @@ const LandingCodigoDaAbundancia = () => {
                   name: 'Fernanda Rocha, 37',
                   role: 'Nutricionista autônoma · Curitiba',
                   avatar: '/avatar-fernanda.webp',
-                  result: 'Fiz o protocolo sem muita expectativa. No Dia 2, quando ele fala sobre o contrato inconsciente com a escassez, eu chorei. Lembrei da minha mãe dizendo que dinheiro é difícil. Carregava isso há 30 anos. Dois meses depois fechei meu maior contrato — R$4.800 num único cliente.',
+                  result: (
+                    <>
+                      Fiz o protocolo sem muita expectativa. No Dia 2, quando ele fala sobre o contrato inconsciente com a escassez, eu chorei. Lembrei da minha mãe dizendo que dinheiro é difícil. Carregava isso há 30 anos. Dois meses depois fechei meu maior contrato — <strong style={{ fontWeight: 700, color: '#F5C842' }}>R$4.800 num único cliente</strong>.
+                    </>
+                  ),
                 },
                 {
                   name: 'Marcos Vinícius, 44',
                   role: 'Engenheiro civil · Goiânia',
                   avatar: '/avatar-marcos.webp',
-                  result: 'Sou cético por formação. Entrei achando que era autoajuda disfarçada. O que me pegou foi a parte da neuroplasticidade no Dia 1 — fez sentido técnico. Terminei os 7 dias. Não virei milionário, mas tomei uma decisão de investimento que vinha adiando há 2 anos. Pequeno? Talvez. Mas real.',
+                  result: (
+                    <>
+                      Sou cético por formação. Entrei achando que era autoajuda disfarçada. O que me pegou foi a parte da neuroplasticidade no Dia 1 — fez sentido técnico. Terminei os 7 dias. Não virei milionário, mas <strong style={{ fontWeight: 700, color: '#F5C842' }}>tomei uma decisão de investimento que vinha adiando há 2 anos</strong>. Pequeno? Talvez. Mas real.
+                    </>
+                  ),
                 },
                 {
                   name: 'Camila Duarte, 31',
                   role: 'Empreendedora · Florianópolis',
                   avatar: '/avatar-camila.webp',
-                  result: 'O Dia 6 foi o mais difícil. Merecimento sem culpa. Eu realmente não achava que merecia ganhar mais do que meu pai ganhou a vida inteira. Ouvi essa sessão três vezes. Na terceira, alguma coisa destravou. Reajustei meus preços na semana seguinte — algo que eu nunca tinha conseguido fazer.',
+                  result: (
+                    <>
+                      O Dia 6 foi o mais difícil. Merecimento sem culpa. Eu realmente não achava que merecia ganhar mais do que meu pai ganhou a vida inteira. Ouvi essa sessão três vezes. Na terceira, alguma coisa destravou. <strong style={{ fontWeight: 700, color: '#F5C842' }}>Reajustei meus preços na semana seguinte</strong> — algo que eu nunca tinha conseguido fazer.
+                    </>
+                  ),
                 },
               ].map((testimonial, index) => (
                 <div
                   key={index}
                   className="p-5 sm:p-6 rounded-lg bg-gradient-to-br from-gray-800/70 to-gray-900/70 border border-gray-700/50"
+                  style={{ borderLeft: '3px solid #F5C842' }}
                 >
                   <div className="flex gap-1 mb-3 sm:mb-4">
                     {[...Array(5)].map((_, i) => (
@@ -442,6 +469,7 @@ const LandingCodigoDaAbundancia = () => {
           </div>
         </section>
 
+        {/* PREÇO */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20 bg-gray-900/50">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 text-center">
@@ -477,12 +505,16 @@ const LandingCodigoDaAbundancia = () => {
 
             <div className="p-4 sm:p-6 rounded-lg bg-gradient-to-br from-[#FFB932]/10 to-transparent border border-[#FFB932]/30 mb-8 sm:mb-12">
               <p className="text-base sm:text-lg text-gray-300 leading-relaxed text-center">
-                Um coaching financeiro custa R$300 a hora. Uma sessão com terapeuta, R$180.
+                Uma hora de coaching financeiro:{' '}
+                <span style={{ textDecoration: 'line-through', color: 'rgba(255,255,255,0.4)' }}>R$300</span>.{' '}
+                Uma sessão de terapia:{' '}
+                <span style={{ textDecoration: 'line-through', color: 'rgba(255,255,255,0.4)' }}>R$180</span>.
                 <br className="hidden sm:block" />
                 {' '}
                 <strong className="text-white">
-                  O Código da Abundância: acesso completo por{' '}
-                  <span className="text-[#FFB932] text-xl sm:text-2xl">R$67</span> — pagamento único.
+                  O Código da Abundância — 7 sessões completas — por{' '}
+                  <span style={{ fontSize: '3rem', color: '#F5C842', fontWeight: 800 }}>R$67</span>{' '}
+                  uma única vez. Sem renovação. Sem assinatura.
                 </strong>
               </p>
             </div>
@@ -491,7 +523,7 @@ const LandingCodigoDaAbundancia = () => {
               <button
                 onClick={handleCTA}
                 disabled={loadingPayment}
-                className="w-full sm:w-auto group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-4 bg-[#FFB932] hover:bg-[#FFB932]/90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-base sm:text-lg shadow-lg shadow-[#FFB932]/20 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="cta-btn w-full sm:w-auto group inline-flex items-center justify-center gap-2 py-5 px-8 bg-[#FFB932] hover:bg-[#FFB932]/90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-base sm:text-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {loadingPayment ? 'Aguarde...' : <>Quero meu Código da Abundância — R$ 67 <span className="group-hover:translate-x-1 transition-transform">→</span></>}
               </button>
@@ -499,6 +531,7 @@ const LandingCodigoDaAbundancia = () => {
           </div>
         </section>
 
+        {/* FAQ */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 text-center">
@@ -510,6 +543,10 @@ const LandingCodigoDaAbundancia = () => {
                 {
                   question: 'Isso é só meditação, já tentei',
                   answer: 'O Código da Abundância não é uma meditação relaxante. É um protocolo de reprogramação. Cada sessão tem um objetivo neurológico específico e uma sequência deliberada. Relaxamento é efeito colateral, não o objetivo.',
+                },
+                {
+                  question: 'Preciso ter experiência com meditação?',
+                  answer: 'Não. As sessões são guiadas do zero. Você só precisa de fone de ouvido e 20 minutos. Muitos dos nossos melhores resultados vieram de pessoas que nunca tinham meditado antes.',
                 },
                 {
                   question: 'Eu não sei meditar',
@@ -533,23 +570,29 @@ const LandingCodigoDaAbundancia = () => {
                     className="w-full flex items-center justify-between gap-3 p-4 sm:p-6 text-left hover:bg-gray-800/70 transition-colors"
                   >
                     <span className="text-sm sm:text-lg font-medium text-white">{faq.question}</span>
-                    <ChevronDown
-                      className={`w-5 h-5 text-[#FFB932] flex-shrink-0 transition-transform ${
-                        openFaq === index ? 'rotate-180' : ''
-                      }`}
+                    <Plus
+                      className="w-5 h-5 text-[#FFB932] flex-shrink-0 transition-transform duration-[250ms] ease"
+                      style={{ transform: openFaq === index ? 'rotate(45deg)' : 'rotate(0deg)' }}
                     />
                   </button>
-                  {openFaq === index && (
+                  <div
+                    style={{
+                      maxHeight: openFaq === index ? '400px' : '0',
+                      overflow: 'hidden',
+                      transition: 'max-height 300ms ease-in-out',
+                    }}
+                  >
                     <div className="px-4 sm:px-6 pb-4 sm:pb-6">
                       <p className="text-sm sm:text-base text-gray-300 leading-relaxed">{faq.answer}</p>
                     </div>
-                  )}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* FECHAMENTO */}
         <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20 bg-gradient-to-b from-gray-900/50 to-gray-950">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 leading-tight">
@@ -557,6 +600,10 @@ const LandingCodigoDaAbundancia = () => {
               <br />
               <span className="text-gray-400">A menos que você decida mudar hoje.</span>
             </h2>
+
+            <p className="text-white/80 mb-4" style={{ fontSize: '16px' }}>
+              Você chegou até o final desta página. Isso já diz algo sobre você.
+            </p>
 
             <p className="text-white/80 mb-12 sm:mb-16" style={{ fontSize: '16px' }}>
               Você chegou até aqui porque algo nessa página tocou num ponto verdadeiro. Não ignore isso.
@@ -579,7 +626,7 @@ const LandingCodigoDaAbundancia = () => {
             <button
               onClick={handleCTA}
               disabled={loadingPayment}
-              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2 px-8 sm:px-10 py-4 sm:py-5 bg-[#FFB932] hover:bg-[#FFB932]/90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-lg sm:text-xl shadow-xl shadow-[#FFB932]/30 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="cta-btn w-full sm:w-auto group inline-flex items-center justify-center gap-2 py-5 px-8 bg-[#FFB932] hover:bg-[#FFB932]/90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-lg sm:text-xl disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               {loadingPayment ? 'Aguarde...' : '→ Quero meu Código da Abundância agora'}
             </button>
@@ -597,6 +644,21 @@ const LandingCodigoDaAbundancia = () => {
         </footer>
       </main>
 
+      {/* Sticky bar — mobile only, appears after 60% scroll */}
+      <div
+        onClick={handleCTA}
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 py-4 cursor-pointer"
+        style={{
+          background: '#F5C842',
+          transform: showStickyBar ? 'translateY(0)' : 'translateY(100%)',
+          transition: 'transform 250ms ease',
+        }}
+      >
+        <p className="text-center font-bold" style={{ color: '#0D0D1A' }}>
+          R$ 67 · Acesso imediato →
+        </p>
+      </div>
+
       <style>{`
         @keyframes spin-slow {
           from { transform: rotate(0deg); }
@@ -607,6 +669,13 @@ const LandingCodigoDaAbundancia = () => {
         }
         .overflow-x-auto::-webkit-scrollbar {
           display: none;
+        }
+        .cta-btn {
+          box-shadow: 0 0 24px rgba(245, 200, 66, 0.35);
+          transition: box-shadow 200ms ease, transform 200ms ease, opacity 200ms ease;
+        }
+        .cta-btn:hover:not(:disabled) {
+          box-shadow: 0 0 36px rgba(245, 200, 66, 0.55);
         }
       `}</style>
     </div>
