@@ -13,19 +13,21 @@
     <meta name="twitter:image" content="https://bolt.new/static/og_default.png" />
   </head>
   <body>
+    <!-- META_PIXEL_NOSCRIPT_START -->
     <!--
       Meta Pixel noscript fallback (para navegadores sem JavaScript).
-      O %VITE_META_PIXEL_ID% é substituído pelo valor real durante `vite build`.
-      Requer que VITE_META_PIXEL_ID esteja definido no .env de produção.
+      O __META_PIXEL_ID__ será substituído automaticamente durante `vite build`.
+      Se VITE_META_PIXEL_ID não estiver definido, este bloco é removido.
     -->
     <noscript>
       <img
         height="1"
         width="1"
         style="display:none"
-        src="https://www.facebook.com/tr?id=%VITE_META_PIXEL_ID%&ev=PageView&noscript=1"
+        src="https://www.facebook.com/tr?id=__META_PIXEL_ID__&ev=PageView&noscript=1"
       />
     </noscript>
+    <!-- META_PIXEL_NOSCRIPT_END -->
 
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
