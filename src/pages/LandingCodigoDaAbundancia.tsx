@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Check, Plus } from 'lucide-react';
+import { trackEvent } from '../lib/meta';
 
 const TOTAL_PARTICIPANTS = 4247;
+const PRODUCT_KEY = 'protocolo_abundancia_7_dias';
 
 const LandingCodigoDaAbundancia = () => {
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0, 4]));
@@ -9,6 +11,34 @@ const LandingCodigoDaAbundancia = () => {
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [displayCount, setDisplayCount] = useState(0);
+  const ofertaRef = useRef<HTMLElement>(null);
+
+  // ── PageView: dispara uma vez ao montar ──────────────────────────────────
+  useEffect(() => {
+    trackEvent('PageView').catch(() => {});
+  }, []);
+
+  // ── ViewContent: dispara quando a seção de oferta entra na viewport ──────
+  useEffect(() => {
+    const el = ofertaRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          trackEvent('ViewContent', {
+            value: 67,
+            currency: 'BRL',
+            contentIds: [PRODUCT_KEY],
+            contentType: 'product',
+          }).catch(() => {});
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Sticky bar: aparece após o hero
   useEffect(() => {
@@ -103,6 +133,14 @@ const LandingCodigoDaAbundancia = () => {
   const handleCTA = async () => {
     if (loadingPayment) return;
     setLoadingPayment(true);
+
+    // InitiateCheckout: Pixel + CAPI antes de abrir o checkout
+    trackEvent('InitiateCheckout', {
+      value: 67,
+      currency: 'BRL',
+      contentIds: [PRODUCT_KEY],
+    }).catch(() => {});
+
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/mp/create-preference`, {
         method: 'POST',
@@ -585,7 +623,7 @@ const LandingCodigoDaAbundancia = () => {
         </section>
 
         {/* ─── 6. OFERTA: PREÇO ─── */}
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20 bg-gray-900/50">
+        <section ref={ofertaRef} id="oferta" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20 bg-gray-900/50">
           <div className="max-w-4xl mx-auto fade-in">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 text-center">
               Tudo que você recebe hoje
