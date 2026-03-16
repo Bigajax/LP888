@@ -607,19 +607,20 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
               </span>
             </h1>
 
-            <p className="hero-subtitle mb-12 max-w-2xl mx-auto" style={{ color: '#555555', lineHeight: '1.55', fontSize: '15px' }}>
+            <p className="hero-subtitle mb-8 sm:mb-12 max-w-2xl mx-auto" style={{ color: '#555555', lineHeight: '1.55', fontSize: '15px' }}>
               Não é falta de disciplina. É um padrão invisível operando no seu cérebro. Em 7 sessões de áudio, você o identifica e desliga. Sem planilhas. Sem coach. Neurociência pura.
             </p>
 
             {/* Social proof */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
-              <div className="flex -space-x-2">
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <div className="flex -space-x-2 shrink-0">
                 {['/avatar-fernanda.webp', '/avatar-marcos.webp', '/avatar-camila.webp', '/avatar-extra.webp', '/avatar-fernanda.webp'].map((src, i) => (
                   <img key={i} src={src} alt="avatar" className="w-7 h-7 sm:w-9 sm:h-9 rounded-full border-2 border-white object-cover bg-gray-200" />
                 ))}
               </div>
-              <span className="text-sm" style={{ color: BODY }}>
-                +{displayCount.toLocaleString('pt-BR')} pessoas já transformaram sua relação com o dinheiro
+              <span className="text-sm leading-snug text-left min-w-0" style={{ color: BODY }}>
+                <span className="font-semibold" style={{ color: DARK }}>+{displayCount.toLocaleString('pt-BR')}</span> pessoas já transformaram
+                <span className="hidden sm:inline"> sua relação com o dinheiro</span>
               </span>
             </div>
 
@@ -628,7 +629,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
 
             <p className="hero-micro text-sm mt-3 mb-2 font-medium" style={{ color: 'rgba(92,81,64,0.7)', fontSize: '12px' }}>Acesso imediato · R$67 uma vez · Garantia 7 dias</p>
 
-            <div className="flex items-center justify-center mt-2 gap-2 mb-12">
+            <div className="flex items-center justify-center mt-2 gap-2 mb-8 sm:mb-12">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               <span className="hero-guarantee text-sm" style={{ color: BODY, fontSize: '13px' }}>Garantia de 7 dias ou seu dinheiro de volta</span>
             </div>
@@ -824,16 +825,16 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
         {/* ══════════════════════════════════════════
             MÉTRICAS
         ══════════════════════════════════════════ */}
-        <section className="metrics-section bg-white px-5 sm:px-6 lg:px-8 pt-8 pb-16 sm:py-20">
+        <section className="metrics-section bg-white px-5 sm:px-6 lg:px-8 pt-6 pb-10 sm:py-20">
           <div className="max-w-4xl mx-auto" ref={metricsRef}>
-            <div className="grid grid-cols-3 gap-4 mb-8">
+            <div className="no-scrollbar flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-5 px-5 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:snap-none mb-6 sm:mb-8">
               {[
                 { value: metric1Count > 0 ? `${metric1Count.toLocaleString('pt-BR')}+` : '4.247+', label: 'pessoas já reprogramaram' },
                 { value: '7 dias', label: 'para mudar o padrão' },
                 { value: metric3Count > 0 ? `${metric3Count}%` : '93%', label: 'sentiram diferença na 1ª semana' },
               ].map((m) => (
-                <div key={m.label} className="metric-card text-center py-7 px-3 rounded-2xl" style={{ background: '#FBF7ED', boxShadow: SHADOW }}>
-                  <p className="font-bold mb-1" style={{ color: BLUE, fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>
+                <div key={m.label} className="metric-card shrink-0 w-[220px] sm:w-auto snap-start text-center py-6 px-4 rounded-2xl" style={{ background: '#FBF7ED', boxShadow: SHADOW }}>
+                  <p className="metric-value font-bold mb-1 whitespace-nowrap tabular-nums leading-none" style={{ color: BLUE, fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>
                     {m.value}
                   </p>
                   <p className="metric-label" style={{ color: BODY, fontSize: '14px' }}>{m.label}</p>
@@ -841,9 +842,9 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
               ))}
             </div>
             {/* Badges */}
-            <div className="flex flex-wrap items-center justify-center gap-3">
+            <div className="no-scrollbar flex items-center justify-start sm:justify-center gap-3 overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible">
               {['Neurociência aplicada', 'Lei da Atração emocional', 'Progressão deliberada'].map(b => (
-                <span key={b} className="metric-badge px-4 py-2 rounded-full text-xs font-semibold" style={{ background: 'rgba(212,175,55,0.08)', border: '1px solid rgba(212,175,55,0.18)', color: BLUE, letterSpacing: '0.03em' }}>
+                <span key={b} className="metric-badge shrink-0 px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap" style={{ background: 'rgba(212,175,55,0.08)', border: '1px solid rgba(212,175,55,0.18)', color: BLUE, letterSpacing: '0.03em' }}>
                   {b}
                 </span>
               ))}
@@ -1356,6 +1357,8 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
         .cta-btn:hover:not(:disabled) { box-shadow: 0 12px 40px rgba(212,175,55,0.5) !important; }
         .faq-card { transition: border-color 200ms ease; }
         .faq-card:hover { border-color: rgba(212,175,55,0.3) !important; }
+        .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
 
         @media (max-width: 639px) {
           /* ── Global ── */
