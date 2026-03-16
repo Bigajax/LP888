@@ -884,25 +884,57 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
         ══════════════════════════════════════════ */}
         <section className="metrics-section bg-white px-5 sm:px-6 lg:px-8 pt-6 pb-10 sm:py-20">
           <div className="max-w-4xl mx-auto" ref={metricsRef}>
-            <div className="no-scrollbar flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-5 px-5 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:snap-none mb-6 sm:mb-8">
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
               {[
-                { value: metric1Count > 0 ? `${metric1Count.toLocaleString('pt-BR')}+` : '4.247+', label: 'pessoas já reprogramaram' },
-                { value: '7 dias', label: 'para mudar o padrão' },
-                { value: metric3Count > 0 ? `${metric3Count}%` : '93%', label: 'sentiram diferença na 1ª semana' },
+                {
+                  key: 'people',
+                  value: metric1Count > 0 ? `${metric1Count.toLocaleString('pt-BR')}+` : '4.247+',
+                  label: (
+                    <>
+                      <span className="sm:hidden">reprogramadas</span>
+                      <span className="hidden sm:inline">pessoas já reprogramaram</span>
+                    </>
+                  ),
+                },
+                {
+                  key: 'days',
+                  value: '7 dias',
+                  label: (
+                    <>
+                      <span className="sm:hidden">protocolo</span>
+                      <span className="hidden sm:inline">para mudar o padrão</span>
+                    </>
+                  ),
+                },
+                {
+                  key: 'impact',
+                  value: metric3Count > 0 ? `${metric3Count}%` : '93%',
+                  label: (
+                    <>
+                      <span className="sm:hidden">na 1ª semana</span>
+                      <span className="hidden sm:inline">sentiram diferença na 1ª semana</span>
+                    </>
+                  ),
+                },
               ].map((m) => (
-                <div key={m.label} className="metric-card shrink-0 w-[220px] sm:w-auto snap-start text-center py-6 px-4 rounded-2xl" style={{ background: '#FBF7ED', boxShadow: SHADOW }}>
-                  <p className="metric-value font-bold mb-1 whitespace-nowrap tabular-nums leading-none" style={{ color: BLUE, fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>
+                <div key={m.key} className="metric-card text-center py-5 px-2 sm:py-7 sm:px-3 rounded-2xl" style={{ background: '#FBF7ED', boxShadow: SHADOW }}>
+                  <p className="metric-value font-bold mb-1 whitespace-nowrap tabular-nums leading-none" style={{ color: BLUE, fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.25rem, 4vw, 3rem)' }}>
                     {m.value}
                   </p>
-                  <p className="metric-label" style={{ color: BODY, fontSize: '14px' }}>{m.label}</p>
+                  <p className="metric-label whitespace-nowrap" style={{ color: BODY, fontSize: '14px' }}>{m.label}</p>
                 </div>
               ))}
             </div>
             {/* Badges */}
-            <div className="no-scrollbar flex items-center justify-start sm:justify-center gap-3 overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible">
-              {['Neurociência aplicada', 'Lei da Atração emocional', 'Progressão deliberada'].map(b => (
-                <span key={b} className="metric-badge shrink-0 px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap" style={{ background: 'rgba(212,175,55,0.08)', border: '1px solid rgba(212,175,55,0.18)', color: BLUE, letterSpacing: '0.03em' }}>
-                  {b}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+              {[
+                { key: 'neuro', desktop: 'Neurociência aplicada', mobile: 'Neurociência' },
+                { key: 'law', desktop: 'Lei da Atração emocional', mobile: 'Lei da Atração' },
+                { key: 'prog', desktop: 'Progressão deliberada', mobile: 'Progressão' },
+              ].map((b) => (
+                <span key={b.key} className="metric-badge px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-semibold whitespace-nowrap" style={{ background: 'rgba(212,175,55,0.08)', border: '1px solid rgba(212,175,55,0.18)', color: BLUE, letterSpacing: '0.03em' }}>
+                  <span className="sm:hidden">{b.mobile}</span>
+                  <span className="hidden sm:inline">{b.desktop}</span>
                 </span>
               ))}
             </div>
@@ -1441,8 +1473,8 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           .cta-btn-full { max-width: 100% !important; width: 100% !important; }
 
           /* ── Metrics ── */
-          .metric-label { font-size: 11px !important; }
-          .metric-badge { font-size: 11px !important; padding: 5px 12px !important; }
+          .metric-label { font-size: 10px !important; letter-spacing: -0.01em; }
+          .metric-badge { font-size: 10px !important; padding: 5px 12px !important; }
 
           /* ── Editorial ── */
           .editorial-h2 { font-size: 26px !important; line-height: 1.25 !important; }
