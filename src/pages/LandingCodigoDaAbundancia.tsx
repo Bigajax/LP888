@@ -11,6 +11,23 @@ const DARK = '#050505';
 const BODY = '#2F2F2F';
 const SHADOW = '0 20px 60px rgba(0,0,0,0.15)';
 
+const SESSION_DURATIONS_MIN: Record<number, number> = {
+  1: 8,
+  2: 8,
+  3: 7,
+  4: 6,
+  5: 7,
+  6: 6,
+  7: 7,
+};
+
+const formatMMSS = (totalSeconds: number) => {
+  const safeSeconds = Math.max(0, Math.floor(totalSeconds));
+  const minutes = Math.floor(safeSeconds / 60);
+  const seconds = safeSeconds % 60;
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+};
+
 // ─── App Mockup Components ────────────────────────────────────────────────────
 
 const IPhoneFrame = ({ rotate = 0, children }: {
@@ -95,11 +112,16 @@ const IPhoneFrame = ({ rotate = 0, children }: {
   </div>
 );
 
-const PlayerMockup = ({ day, title, progress = 38, rotate = -1.5 }: {
-  day: number; title: string; progress?: number; rotate?: number;
-}) => (
-  <IPhoneFrame rotate={rotate}>
-    <div style={{ background: 'linear-gradient(180deg, #3B1C00 0%, #5C3410 45%, #2C1800 100%)', height: '100%' }}>
+const PlayerMockup = ({ day, title, progress = 38, rotate = -1.5, durationMin }: {
+  day: number; title: string; progress?: number; rotate?: number; durationMin?: number;
+}) => {
+  const totalMinutes = durationMin ?? SESSION_DURATIONS_MIN[day] ?? 8;
+  const totalSeconds = totalMinutes * 60;
+  const currentSeconds = Math.min(totalSeconds, Math.max(0, Math.round((progress / 100) * totalSeconds)));
+
+  return (
+    <IPhoneFrame rotate={rotate}>
+      <div style={{ background: 'linear-gradient(180deg, #3B1C00 0%, #5C3410 45%, #2C1800 100%)', height: '100%' }}>
       {/* Back button */}
       <div style={{ padding: '6px 16px 0' }}>
         <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -151,10 +173,7 @@ const PlayerMockup = ({ day, title, progress = 38, rotate = -1.5 }: {
       <div style={{ margin: '16px 0 0', background: 'rgba(0,0,0,0.38)', borderRadius: '20px 20px 0 0', padding: '14px 16px 18px' }}>
         {/* Sons de Fundo row */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-          <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '50px', padding: '7px 12px', display: 'flex', alignItems: 'center', gap: '7px' }}>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)">
-              <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
-            </svg>
+          <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '50px', padding: '7px 12px', display: 'flex', alignItems: 'center' }}>
             <div>
               <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '8px', letterSpacing: '1px', fontWeight: 600, margin: 0 }}>SONS DE FUNDO</p>
               <p style={{ color: 'white', fontSize: '11px', fontWeight: 700, margin: 0 }}>432Hz</p>
@@ -172,17 +191,18 @@ const PlayerMockup = ({ day, title, progress = 38, rotate = -1.5 }: {
         </div>
         {/* Progress bar */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', minWidth: '28px' }}>00:07</span>
+          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', minWidth: '28px' }}>{formatMMSS(currentSeconds)}</span>
           <div style={{ flex: 1, position: 'relative', height: '3px', background: 'rgba(255,255,255,0.18)', borderRadius: '3px' }}>
             <div style={{ width: `${progress}%`, height: '100%', background: BLUE, borderRadius: '3px' }} />
             <div style={{ position: 'absolute', left: `${progress}%`, top: '50%', transform: 'translate(-50%, -50%)', width: '9px', height: '9px', borderRadius: '50%', background: BLUE }} />
           </div>
-          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', minWidth: '28px', textAlign: 'right' }}>07:46</span>
+          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', minWidth: '28px', textAlign: 'right' }}>{formatMMSS(totalSeconds)}</span>
         </div>
       </div>
     </div>
-  </IPhoneFrame>
-);
+    </IPhoneFrame>
+  );
+};
 
 const SessionListMockup = ({ rotate = 1.5 }: { rotate?: number }) => (
   <IPhoneFrame rotate={rotate}>
@@ -195,14 +215,14 @@ const SessionListMockup = ({ rotate = 1.5 }: { rotate?: number }) => (
       {/* List */}
       <div style={{ padding: '0 10px 16px' }}>
         {([
-          { day: 1, title: 'O Diagnóstico', done: true },
-          { day: 2, title: 'Quebrando o Contrato', done: false, active: true },
-          { day: 3, title: 'A Frequência do Receber', done: false },
-          { day: 4, title: 'Você no Futuro Próspero', done: false },
-          { day: 5, title: 'Gratidão Como Imã', done: false },
-          { day: 6, title: 'Merecimento Sem Culpa', done: false },
-          { day: 7, title: 'A Nova Identidade', done: false },
-        ] as { day: number; title: string; done: boolean; active?: boolean }[]).map((s) => (
+          { day: 1, title: 'O Diagnóstico', durationMin: SESSION_DURATIONS_MIN[1], done: true },
+          { day: 2, title: 'Quebrando o Contrato', durationMin: SESSION_DURATIONS_MIN[2], done: false, active: true },
+          { day: 3, title: 'A Frequência do Receber', durationMin: SESSION_DURATIONS_MIN[3], done: false },
+          { day: 4, title: 'Você no Futuro Próspero', durationMin: SESSION_DURATIONS_MIN[4], done: false },
+          { day: 5, title: 'Gratidão Como Imã', durationMin: SESSION_DURATIONS_MIN[5], done: false },
+          { day: 6, title: 'Merecimento Sem Culpa', durationMin: SESSION_DURATIONS_MIN[6], done: false },
+          { day: 7, title: 'A Nova Identidade', durationMin: SESSION_DURATIONS_MIN[7], done: false },
+        ] as { day: number; title: string; durationMin: number; done: boolean; active?: boolean }[]).map((s) => (
           <div key={s.day} style={{
             display: 'flex', alignItems: 'center', gap: '9px',
             padding: '7px 10px', borderRadius: '12px', marginBottom: '3px',
@@ -217,7 +237,7 @@ const SessionListMockup = ({ rotate = 1.5 }: { rotate?: number }) => (
               <p style={{ color: s.active ? 'white' : s.done ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.75)', fontSize: '10px', fontWeight: s.active ? 700 : 400, margin: '0 0 1px', whiteSpace: 'normal', lineHeight: 1.15, letterSpacing: '-0.01em' }}>
                 Dia {s.day} · {s.title}
               </p>
-              <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', margin: 0 }}>~20 min</p>
+              <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', margin: 0 }}>{s.durationMin} min</p>
             </div>
             {s.done ? (
               <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgba(212,175,55,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -819,7 +839,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                           Dia 2 · Quebrando o Contrato
                         </p>
                         <p style={{ margin: '2px 0 0', color: 'rgba(255,255,255,0.45)', fontSize: '10px', fontFamily: "'Inter', sans-serif" }}>
-                          ~20 min · sem anúncios
+                          {SESSION_DURATIONS_MIN[2]} min · sem anúncios
                         </p>
                       </div>
                     </div>
@@ -1243,7 +1263,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                 </div>
                 <div className="space-y-4 mb-8">
                   {[
-                    { item: '7 sessões de reprogramação neurológica — protocolo progressivo (~20 min cada)', value: 'De R$280' },
+                    { item: '7 sessões de reprogramação neurológica — protocolo progressivo (6–8 min cada)', value: 'De R$280' },
                     { item: 'Áudio SOS: Ansiedade Financeira Aguda — para crises, decisões difíceis e bloqueios imediatos', value: 'De R$47' },
                     { item: 'Acesso vitalício — ouça quantas vezes quiser, para sempre', value: '' },
                     { item: 'Disponível no app Ecotopia — iOS e Android', value: '' },
