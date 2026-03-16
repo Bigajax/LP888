@@ -490,6 +490,7 @@ const LandingCodigoDaAbundancia = () => {
     },
   ];
 
+<<<<<<< HEAD
 const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
   label: string; white?: boolean; large?: boolean; maxWidth?: number | string;
 }) => (
@@ -593,6 +594,33 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold mb-8 tracking-widest" style={{ background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.2)', color: BLUE }}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+=======
+  return (
+    <div className="min-h-screen bg-gray-950 text-white font-sans">
+      {/* Header */}
+      <header className="w-full bg-[#FFB932] border-b border-[#e6a520] shadow-lg shadow-[#FFB932]/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-center">
+          <img src="/logo-ecotopia.webp" alt="Ecotopia" className="h-16 sm:h-20 w-auto" />
+        </div>
+      </header>
+
+      <main>
+        {/* ─── 1. HERO ─── */}
+        <section id="hero" className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-24 sm:py-32 overflow-hidden">
+          {/* Radial gradient background */}
+          <div className="absolute inset-0 pointer-events-none" style={{
+            background: 'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(255,185,50,0.12) 0%, transparent 70%)',
+          }} />
+          {/* Decorative glow orbs */}
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full opacity-5 blur-3xl pointer-events-none" style={{ background: '#FFB932' }} />
+          <div className="absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full opacity-5 blur-2xl pointer-events-none" style={{ background: '#FFB932' }} />
+
+          <div className="relative max-w-4xl mx-auto text-center w-full">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#FFB932]/10 border border-[#FFB932]/25 text-[#FFB932] text-xs sm:text-sm font-medium mb-6 sm:mb-8">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
               7 DIAS · PROTOCOLO PROGRESSIVO
             </div>
 
@@ -623,6 +651,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
               </span>
             </div>
 
+<<<<<<< HEAD
             {/* CTA */}
             <CtaBtn label="Quero desligar esse padrão →" large />
 
@@ -645,6 +674,12 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                 border: '1px solid rgba(255,255,255,0.06)',
                 marginBottom: '20px',
               }}
+=======
+            {/* Hero CTA — sem preço, leva ao checklist */}
+            <button
+              onClick={scrollToChecklist}
+              className="cta-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 py-5 px-8 bg-gradient-to-r from-[#FFB932] to-[#F5C842] hover:opacity-90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-base sm:text-lg"
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
             >
               {/* ── Chrome bar ── */}
               <div style={{ background: '#FFFFFF', padding: '0 14px', height: '44px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
@@ -821,6 +856,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           </div>
         </section>
 
+<<<<<<< HEAD
         {/* ══════════════════════════════════════════
             MÉTRICAS
         ══════════════════════════════════════════ */}
@@ -837,9 +873,91 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                     {m.value}
                   </p>
                   <p className="metric-label" style={{ color: BODY, fontSize: '14px' }}>{m.label}</p>
+=======
+        {/* ─── 1.5. BARRA DE MÉTRICAS ─── */}
+        <div className="bg-gray-900/30 border-y border-gray-800/50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-3 divide-x divide-[#FFB932]/20">
+              <div className="py-6 sm:py-8 text-center px-4">
+                <p className="text-[#FFB932] text-2xl sm:text-3xl font-bold mb-1">4.247+</p>
+                <p className="text-xs sm:text-sm text-gray-400">participantes</p>
+              </div>
+              <div className="py-6 sm:py-8 text-center px-4">
+                <p className="text-[#FFB932] text-2xl sm:text-3xl font-bold mb-1">7 dias</p>
+                <p className="text-xs sm:text-sm text-gray-400">protocolo</p>
+              </div>
+              <div className="py-6 sm:py-8 text-center px-4">
+                <p className="text-[#FFB932] text-2xl sm:text-3xl font-bold mb-1">100%</p>
+                <p className="text-xs sm:text-sm text-gray-400">garantia 7 dias</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ─── 2. IDENTIFICAÇÃO: CHECKLIST ─── */}
+        <section id="checklist" className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20 bg-gray-900/50">
+          <div className="max-w-4xl mx-auto fade-in">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 text-center">
+              Marque o que parece familiar:
+            </h2>
+
+            <div className="space-y-3 sm:space-y-4 mb-8">
+              {[
+                'Quando o dinheiro começa a entrar bem, algo sempre aparece para zerar',
+                'No fundo, uma voz sussurra que abundância não é para você. E você não sabe de onde veio essa voz.',
+                'Você gasta antes de poupar — como se guardar fosse perigoso',
+                'Você trabalha mais que muita gente que ganha mais que você',
+                'Você sente culpa quando gasta, ansiedade quando poupa',
+                'Você já tentou planilha, curso financeiro, lei da atração — e voltou para o mesmo lugar',
+              ].map((item, index) => {
+                const checked = checkedItems.has(index);
+                return (
+                  <button
+                    key={index}
+                    onClick={() => toggleCheck(index)}
+                    className={`w-full flex gap-3 sm:gap-4 p-4 rounded-lg text-left cursor-pointer border transition-all duration-150 ${
+                      checked
+                        ? 'bg-[#FFB932]/10 border-[#FFB932]/60 checkbox-checked'
+                        : 'bg-transparent border-transparent hover:border-[#F5C842]/25 hover:bg-[#F5C842]/[0.04]'
+                    }`}
+                  >
+                    <div className={`flex-shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all mt-0.5 ${
+                      checked ? 'bg-[#FFB932] border-[#FFB932] ring-2 ring-[#FFB932]/30' : 'border-gray-600 hover:border-[#FFB932]/50'
+                    }`}>
+                      {checked && (
+                        <svg className="w-3.5 h-3.5 text-gray-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </div>
+                    <p className={`text-sm sm:text-base transition-colors ${checked ? 'text-white font-medium' : 'text-gray-300'}`}>
+                      {item}
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Resultado dinâmico */}
+            {checkedItems.size > 0 && (() => {
+              const msg = getCounterMessage(checkedItems.size);
+              return msg ? (
+                <div className="text-center py-5 px-6 rounded-lg bg-gray-800/50 border border-[#FFB932]/20 mb-8 transition-all backdrop-blur-sm" style={{ background: 'linear-gradient(135deg, rgba(255,185,50,0.05) 0%, rgba(30,30,46,0.5) 100%)' }}>
+                  <p className={`text-base sm:text-lg font-medium ${msg.color} mb-1`}>{msg.text}</p>
+                  {checkedItems.size >= 3 && (
+                    <button
+                      onClick={handleCTA}
+                      disabled={loadingPayment}
+                      className="cta-btn mt-4 inline-flex items-center gap-2 py-5 px-8 bg-gradient-to-r from-[#FFB932] to-[#F5C842] hover:opacity-90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-sm sm:text-base disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    >
+                      {loadingPayment ? 'Aguarde...' : 'Quero recalibrar meu termostato em 7 dias → R$67'}
+                    </button>
+                  )}
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
                 </div>
               ))}
             </div>
+<<<<<<< HEAD
             {/* Badges */}
             <div className="flex flex-wrap items-center justify-center gap-3">
               {['Neurociência aplicada', 'Lei da Atração emocional', 'Progressão deliberada'].map(b => (
@@ -847,6 +965,81 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                   {b}
                 </span>
               ))}
+=======
+
+            {/* Pull-quote destaque */}
+            <div className="w-full py-5 px-6 mb-8 rounded-lg border border-[#FFB932]/30 bg-[#FFB932]/5 text-center relative overflow-hidden">
+              <span className="absolute left-4 top-0 text-[#FFB932]/15 font-serif leading-none select-none" style={{ fontSize: '6rem', lineHeight: 1 }}>"</span>
+              <p className="text-xl sm:text-2xl font-bold text-[#FFB932] leading-snug relative z-10">
+                "Força de vontade não recalibra termostato.<br className="hidden sm:block" /> Reprogramação sim."
+              </p>
+            </div>
+
+            {/* Visual antes / depois */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+              <div className="p-5 rounded-lg backdrop-blur-sm bg-red-950/25 border border-red-800/30">
+                <div className="flex items-center gap-2 mb-4">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" />
+                  </svg>
+                  <h4 className="font-bold text-red-400 text-xs sm:text-sm uppercase tracking-wider">
+                    Termostato calibrado errado
+                  </h4>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    'Trabalha duro',
+                    'Começa a ganhar mais',
+                    'Algo "aparece" pra gastar',
+                    'Volta ao ponto zero',
+                    '↺ O ciclo se repete',
+                  ].map((step, i) => (
+                    <div key={i} className="flex items-center gap-3 text-sm text-gray-400">
+                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 font-bold ${i === 4 ? 'bg-red-800/50 text-red-300' : 'bg-red-900/40 text-red-400'}`}>
+                        {i === 4 ? '↺' : i + 1}
+                      </span>
+                      <span className={i === 4 ? 'text-red-400 font-medium' : ''}>{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="p-5 rounded-lg backdrop-blur-sm bg-[#FFB932]/8 border border-[#FFB932]/25">
+                <div className="flex items-center gap-2 mb-4">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFB932" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" /><polyline points="9 12 11 14 15 10" />
+                  </svg>
+                  <h4 className="font-bold text-[#FFB932] text-xs sm:text-sm uppercase tracking-wider">
+                    Termostato recalibrado
+                  </h4>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    'Trabalha com intenção',
+                    'Começa a ganhar mais',
+                    'Mantém e consolida',
+                    'Identidade próspera cresce',
+                    '↑ Expande naturalmente',
+                  ].map((step, i) => (
+                    <div key={i} className="flex items-center gap-3 text-sm text-gray-300">
+                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 font-bold ${i === 4 ? 'bg-[#FFB932]/30 text-[#FFB932]' : 'bg-[#FFB932]/15 text-[#FFB932]'}`}>
+                        {i === 4 ? '↑' : i + 1}
+                      </span>
+                      <span className={i === 4 ? 'text-[#FFB932] font-medium' : ''}>{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 sm:p-6 rounded-lg bg-gradient-to-br from-[#FFB932]/5 to-transparent border border-[#FFB932]/20">
+              <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+                Você não recalibra um termostato com força de vontade. Você recalibra{' '}
+                <strong className="text-white">reprogramando o sistema operacional que o controla.</strong>
+              </p>
+              <p className="mt-4 text-base sm:text-lg text-gray-300">
+                É exatamente isso que o <strong className="text-[#FFB932]">Código da Abundância</strong> foi projetado para fazer.
+              </p>
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
             </div>
           </div>
         </section>
@@ -856,6 +1049,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
         ══════════════════════════════════════════ */}
         <section className="editorial-section px-5 sm:px-6 lg:px-8 py-14 sm:py-20 text-center" style={{ background: '#FBF7ED' }}>
           <div className="max-w-3xl mx-auto fade-in">
+<<<<<<< HEAD
             <h2 className="editorial-title" style={{ fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.8rem, 4vw, 2.75rem)', color: DARK, fontWeight: 800, lineHeight: 1.2 }}>
               E se o problema nunca foi falta de esforço?
               <br />
@@ -894,6 +1088,127 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                 <PlayerMockup day={1} title="O Diagnóstico" progress={38} rotate={-2} />
               </div>
             </div>
+=======
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-[#FFB932]">
+                Código da Abundância
+              </h2>
+              <p className="text-base sm:text-xl italic text-gray-400">
+                7 sessões de áudio. 20 minutos por dia. Reprogramação financeira em profundidade.
+              </p>
+            </div>
+
+            <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-8 sm:mb-10 text-center max-w-2xl mx-auto">
+              Não é motivação. Não é "pense positivo e o dinheiro vem". É um protocolo de 7 dias que combina{' '}
+              <strong className="text-white">neurociência da reprogramação de crenças</strong> com{' '}
+              <strong className="text-white">Lei da Atração aplicada ao estado emocional.</strong>
+            </p>
+
+            {/* Timeline com imagens */}
+            <div className="space-y-4">
+              {sessions.map((session) => {
+                const s = getTimelineStyle(session.day);
+                const isEven = session.day % 2 === 0;
+                return (
+                  <div key={session.day} className={`rounded-xl border transition-all hover:brightness-110 overflow-hidden ${s.border} ${s.bg}`}>
+                    <div className={`flex flex-col sm:flex-row gap-0 ${isEven ? 'sm:flex-row-reverse' : ''}`}>
+                      {/* Image */}
+                      <div className="sm:w-36 sm:flex-shrink-0">
+                        <img
+                          src={`/dia${session.day}.webp`}
+                          alt={`Dia ${session.day}`}
+                          className="w-full h-32 sm:h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                      {/* Content */}
+                      <div className="flex gap-4 p-4 sm:p-5 flex-1 min-w-0">
+                        <div className="flex-shrink-0">
+                          <span className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold border text-base ${s.badge} ${s.num}`}>
+                            {session.day}
+                          </span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2 mb-1">
+                            <h3 className={`font-bold text-sm sm:text-base leading-tight ${session.day === 7 ? 'text-[#FFB932]' : 'text-white'}`}>
+                              {session.title}
+                            </h3>
+                            <span className="text-xs text-gray-500 flex-shrink-0 mt-0.5">~20 min</span>
+                          </div>
+                          <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">{session.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <p className="text-base sm:text-xl text-gray-300 leading-relaxed mt-10 text-center italic">
+              Cada sessão se aprofunda onde a anterior terminou. No 7º dia, a mudança não está mais no que você pensa sobre dinheiro.{' '}
+              <strong className="text-[#FFB932] not-italic font-bold">Está em quem você é.</strong>
+            </p>
+          </div>
+        </section>
+
+        {/* ─── 5. PROVA SOCIAL: DEPOIMENTOS ─── */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20 bg-gray-950 border-y border-gray-800/60">
+          <div className="max-w-5xl mx-auto fade-in">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 text-center">
+              O que muda depois de 7 dias
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-4">
+              {testimonials.slice(0, 3).map((t, i) => (
+                <div key={i} className="relative p-5 sm:p-6 rounded-xl bg-gradient-to-br from-gray-800/70 to-gray-900/70 border border-gray-700/50 shadow-2xl ring-1 ring-[#FFB932]/20 overflow-hidden" style={{ borderLeft: '3px solid #F5C842' }}>
+                  {/* Decorative quote */}
+                  <span className="absolute top-2 right-4 text-[#FFB932]/15 font-serif leading-none select-none pointer-events-none" style={{ fontSize: '5rem', lineHeight: 1 }}>"</span>
+                  <div className="flex gap-1 mb-3 sm:mb-4 relative z-10">
+                    {[...Array(5)].map((_, j) => (
+                      <svg key={j} className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFB932]" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-5 leading-relaxed relative z-10">"{t.result}"</p>
+                  <div className="flex items-center gap-3 relative z-10">
+                    <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full object-cover bg-gray-700 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold text-white">{t.name}</p>
+                      <p className="text-xs sm:text-sm text-gray-500">{t.role}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:max-w-2xl md:mx-auto mb-8">
+              {testimonials.slice(3).map((t, i) => (
+                <div key={i} className="relative p-5 sm:p-6 rounded-xl bg-gradient-to-br from-gray-800/70 to-gray-900/70 border border-gray-700/50 shadow-2xl ring-1 ring-[#FFB932]/20 overflow-hidden" style={{ borderLeft: '3px solid #F5C842' }}>
+                  <span className="absolute top-2 right-4 text-[#FFB932]/15 font-serif leading-none select-none pointer-events-none" style={{ fontSize: '5rem', lineHeight: 1 }}>"</span>
+                  <div className="flex gap-1 mb-3 sm:mb-4 relative z-10">
+                    {[...Array(5)].map((_, j) => (
+                      <svg key={j} className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFB932]" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-5 leading-relaxed relative z-10">"{t.result}"</p>
+                  <div className="flex items-center gap-3 relative z-10">
+                    <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full object-cover bg-gray-700 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold text-white">{t.name}</p>
+                      <p className="text-xs sm:text-sm text-gray-500">{t.role}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-center text-[#FFB932] font-medium text-base sm:text-lg">
+              +{TOTAL_PARTICIPANTS.toLocaleString('pt-BR')} pessoas já completaram o protocolo
+            </p>
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
           </div>
         </section>
 
@@ -931,6 +1246,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           </div>
         </section>
 
+<<<<<<< HEAD
         {/* ══════════════════════════════════════════
             FEATURE 3 — texto esquerda / mockup direita
         ══════════════════════════════════════════ */}
@@ -1032,14 +1348,50 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
               <div className="h-px mb-4" style={{ background: 'rgba(0,0,0,0.07)' }} />
               <p className="text-sm sm:text-base font-semibold text-center" style={{ color: BLUE }}>
                 Funciona até para quem não acredita. A neuroplasticidade não precisa da sua permissão.
+=======
+            {/* Caixa de preço com destaque */}
+            <div
+              className="p-6 sm:p-8 rounded-xl border border-[#FFB932]/30 mb-8 sm:mb-12 text-center"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255,185,50,0.12) 0%, rgba(255,185,50,0.04) 50%, transparent 100%)',
+                boxShadow: '0 0 60px rgba(255,185,50,0.12)',
+              }}
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFB932]/15 border border-[#FFB932]/30 text-[#FFB932] text-xs font-semibold uppercase tracking-wider mb-4">
+                Oferta especial
+              </div>
+              <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-4">
+                Uma hora de coaching financeiro:{' '}
+                <span style={{ textDecoration: 'line-through', color: 'rgba(255,255,255,0.4)' }}>R$300</span>.{' '}
+                Uma sessão de terapia:{' '}
+                <span style={{ textDecoration: 'line-through', color: 'rgba(255,255,255,0.4)' }}>R$180</span>.
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
               </p>
+              <p className="text-base sm:text-lg text-gray-300 mb-3">
+                O Código da Abundância — 7 sessões completas — por
+              </p>
+              <p className="font-extrabold leading-none mb-3" style={{ fontSize: 'clamp(3.5rem, 10vw, 5rem)', color: '#F5C842' }}>R$67</p>
+              <p className="text-sm text-gray-400">uma única vez · Sem renovação · Sem assinatura</p>
             </div>
+<<<<<<< HEAD
             <div className="text-center mt-10">
               <CtaBtn label="Começar agora — R$67 →" large />
+=======
+
+            <div className="text-center">
+              <button
+                onClick={handleCTA}
+                disabled={loadingPayment}
+                className="cta-btn w-full sm:w-auto group inline-flex items-center justify-center gap-2 py-5 px-8 bg-gradient-to-r from-[#FFB932] to-[#F5C842] hover:opacity-90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-base sm:text-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+              >
+                {loadingPayment ? 'Aguarde...' : <>Quero meu Código da Abundância — R$67 <span className="group-hover:translate-x-1 transition-transform">→</span></>}
+              </button>
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
             </div>
           </div>
         </section>
 
+<<<<<<< HEAD
         {/* ══════════════════════════════════════════
             DEPOIMENTOS
         ══════════════════════════════════════════ */}
@@ -1122,10 +1474,38 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                   ⭐ 4.9/5 de avaliação média
                 </span>
               </div>
+=======
+        {/* ─── 7. GARANTIA ─── */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+          <div className="max-w-2xl mx-auto text-center fade-in">
+            <div
+              className="p-8 sm:p-10 rounded-2xl border border-[#FFB932]/40"
+              style={{ background: 'linear-gradient(135deg, rgba(255,185,50,0.08) 0%, rgba(17,24,39,0.9) 100%)' }}
+            >
+              <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#FFB932]/10 border-2 border-[#FFB932]/40 mb-6 shield-pulse">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFB932" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <polyline points="9 12 11 14 15 10" />
+                </svg>
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+                Garantia de 7 dias: teste sem risco
+              </h2>
+
+              <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-4">
+                Faça o protocolo completo. Se ao fim de 7 dias você não sentir nenhuma diferença na sua relação com o dinheiro, basta enviar uma mensagem e devolvemos <strong className="text-white">100% do valor</strong>. Sem perguntas, sem burocracia.
+              </p>
+
+              <p className="text-sm text-gray-500">
+                Você não tem nada a perder — exceto o padrão que está te mantendo onde está.
+              </p>
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
             </div>
           </div>
         </section>
 
+<<<<<<< HEAD
         {/* ══════════════════════════════════════════
             PREÇO
         ══════════════════════════════════════════ */}
@@ -1133,7 +1513,15 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           <div className="max-w-xl mx-auto fade-in">
             <h2 className="text-3xl sm:text-4xl font-bold mb-10 text-center" style={{ fontFamily: "'GT Walsheim', sans-serif", color: DARK }}>
               Tudo isso por menos que um jantar fora.
+=======
+        {/* ─── 8. FAQ ─── */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20 bg-gray-900/50">
+          <div className="max-w-4xl mx-auto fade-in">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-center">
+              Perguntas frequentes
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
             </h2>
+            <div className="h-0.5 w-12 bg-[#FFB932] mx-auto mb-8 sm:mb-12 rounded-full" />
 
             <div className="rounded-3xl overflow-hidden" style={{ background: 'white', boxShadow: '0 24px 64px rgba(212,175,55,0.15), 0 4px 16px rgba(0,0,0,0.06)', border: '1.5px solid rgba(0,0,0,0.06)' }}>
               <div style={{ height: '4px', background: BLUE }} />
@@ -1217,11 +1605,15 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
 
             <div className="space-y-3">
               {faqs.map((faq, index) => (
+<<<<<<< HEAD
                 <div
                   key={index}
                   className="faq-card rounded-2xl overflow-hidden transition-all"
                   style={{ background: '#FBF7ED', border: `1.5px solid ${openFaqs.has(index) ? `rgba(212,175,55,0.25)` : 'rgba(0,0,0,0.07)'}`, boxShadow: SHADOW }}
                 >
+=======
+                <div key={index} className="rounded-lg bg-gray-800/50 border border-gray-700/50 overflow-hidden transition-colors hover:border-[#FFB932]/30">
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
                   <button
                     onClick={() => toggleFaq(index)}
                     className="w-full flex items-center justify-between gap-3 p-5 sm:p-6 text-left"
@@ -1245,6 +1637,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           </div>
         </section>
 
+<<<<<<< HEAD
         {/* ══════════════════════════════════════════
             CTA FINAL
         ══════════════════════════════════════════ */}
@@ -1253,6 +1646,18 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
             <div className="h-px w-20 mx-auto mb-10" style={{ background: 'rgba(255,255,255,0.3)' }} />
             <h2 className="font-bold mb-4 leading-tight text-white" style={{ fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.8rem, 4.5vw, 3rem)' }}>
               Daqui a 7 dias, você pode estar no mesmo lugar. Ou pode estar diferente.
+=======
+        {/* ─── 9. FECHAMENTO ─── */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20" style={{ background: 'linear-gradient(to bottom, rgba(17,24,39,0.5) 0%, rgba(255,185,50,0.04) 50%, rgba(3,7,18,1) 100%)' }}>
+          <div className="max-w-4xl mx-auto text-center fade-in">
+            {/* Decorative line */}
+            <div className="h-px w-24 bg-gradient-to-r from-transparent via-[#FFB932] to-transparent mx-auto mb-8" />
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 leading-tight">
+              Seu cérebro vai continuar executando o programa antigo amanhã.
+              <br />
+              <span className="text-gray-400">A menos que você decida mudar hoje.</span>
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
             </h2>
             <p className="text-lg font-semibold mb-10" style={{ color: 'rgba(255,255,255,0.85)' }}>
               A escolha é agora.
@@ -1278,8 +1683,12 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
             <button
               onClick={handleCTA}
               disabled={loadingPayment}
+<<<<<<< HEAD
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-bold text-xl sm:text-2xl transition-all hover:opacity-95 hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
               style={{ background: 'white', color: BLUE, borderRadius: '100px', padding: '20px 48px', boxShadow: '0 8px 40px rgba(0,0,0,0.2)' }}
+=======
+              className="cta-btn cta-final w-full sm:w-auto group inline-flex items-center justify-center gap-3 py-6 px-10 bg-gradient-to-r from-[#FFB932] to-[#F5C842] hover:opacity-90 text-gray-950 font-bold rounded-lg transition-all transform hover:scale-105 text-xl sm:text-2xl disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
             >
               {loadingPayment ? 'Aguarde...' : 'Sim, eu escolho mudar — R$67 →'}
             </button>
@@ -1290,6 +1699,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           </div>
         </section>
 
+<<<<<<< HEAD
         {/* ══════════════════════════════════════════
             FOOTER
         ══════════════════════════════════════════ */}
@@ -1305,6 +1715,13 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
               ))}
             </div>
             <p className="text-xs text-center" style={{ color: '#5C5140' }}>© 2024 Ecotopia. Todos os direitos reservados.</p>
+=======
+        <footer className="border-t border-gray-800 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+          <div className="max-w-7xl mx-auto flex flex-col items-center gap-4">
+            <img src="/logo-ecotopia.webp" alt="Ecotopia" className="h-10 w-auto opacity-70" />
+            <div className="h-px w-32 bg-gradient-to-r from-transparent via-gray-700 to-transparent" />
+            <p className="text-xs sm:text-sm text-gray-500 text-center">© 2024 Ecotopia. Todos os direitos reservados.</p>
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
           </div>
         </footer>
       </main>
@@ -1313,12 +1730,16 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
       <div
         className="md:hidden fixed bottom-0 left-0 right-0 z-[999]"
         style={{
+<<<<<<< HEAD
           background: 'white',
           boxShadow: '0 -4px 12px rgba(0,0,0,0.08)',
           height: '64px',
           display: 'flex',
           alignItems: 'center',
           padding: '0 20px',
+=======
+          background: 'linear-gradient(90deg, #FFB932, #F5C842)',
+>>>>>>> 9b26be2a400e30ae322d4ec06fc26dd473b3b0fd
           transform: showStickyBar ? 'translateY(0)' : 'translateY(100%)',
           transition: 'transform 300ms ease',
         }}
@@ -1423,6 +1844,14 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           .cta-final-sub { font-size: 18px !important; }
           .cta-final-micro { font-size: 11px !important; }
           .cta-final-item { font-size: 14px !important; }
+        }
+        /* Shield pulse animation */
+        @keyframes shield-pulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(255, 185, 50, 0.2); }
+          50% { box-shadow: 0 0 0 10px rgba(255, 185, 50, 0); }
+        }
+        .shield-pulse {
+          animation: shield-pulse 2.5s ease-in-out infinite;
         }
       `}</style>
     </div>
