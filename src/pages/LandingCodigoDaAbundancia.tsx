@@ -214,7 +214,7 @@ const SessionListMockup = ({ rotate = 1.5 }: { rotate?: number }) => (
               <img src={`/dia${s.day}.webp`} alt={`Dia ${s.day}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <p style={{ color: s.active ? 'white' : s.done ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.75)', fontSize: '11px', fontWeight: s.active ? 700 : 400, margin: '0 0 1px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              <p style={{ color: s.active ? 'white' : s.done ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.75)', fontSize: '10px', fontWeight: s.active ? 700 : 400, margin: '0 0 1px', whiteSpace: 'normal', lineHeight: 1.15, letterSpacing: '-0.01em' }}>
                 Dia {s.day} · {s.title}
               </p>
               <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', margin: 0 }}>~20 min</p>
@@ -686,7 +686,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                   </svg>
                   <span style={{ color: 'rgba(0,0,0,0.45)', fontSize: '7.5px', fontFamily: "'Inter', sans-serif", letterSpacing: '0em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    ecofrontend888.vercel.app/app/meditation-player
+                    ecofrontend888.vercel.app/app/protocolo-7-dias
                   </span>
                 </div>
 
@@ -737,78 +737,135 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
               </div>
 
               {/* ── Webpage content ── */}
-              <div style={{ background: 'radial-gradient(ellipse at 50% 20%, #7A4010 0%, #1E0900 45%, #080500 100%)', padding: '22px 20px 0' }}>
-
-                {/* Album art */}
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '14px' }}>
-                  <div style={{ width: '148px', height: '148px', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 8px 24px rgba(0,0,0,0.7)' }}>
-                    <img src="/dia1.webp" alt="Dia 1" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              <div style={{ background: 'radial-gradient(ellipse at 50% 20%, #7A4010 0%, #1E0900 45%, #080500 100%)', padding: '16px 18px 16px' }}>
+                {/* Header */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', marginBottom: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+                    <div style={{ width: '10px', height: '10px', borderRadius: '3px', background: BLUE, boxShadow: '0 0 0 4px rgba(212,175,55,0.12)' }} />
+                    <p style={{ margin: 0, color: 'white', fontWeight: 800, fontSize: '13px', fontFamily: "'Inter', sans-serif", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      Protocolo completo — 7 dias
+                    </p>
+                  </div>
+                  <div style={{ flexShrink: 0, background: 'rgba(212,175,55,0.14)', border: '1px solid rgba(212,175,55,0.35)', color: 'rgba(255,255,255,0.9)', padding: '6px 10px', borderRadius: '999px', fontSize: '10px', fontFamily: "'Inter', sans-serif", fontWeight: 700, letterSpacing: '0.04em' }}>
+                    7 sessões · acesso imediato
                   </div>
                 </div>
 
-                {/* Title */}
-                <p style={{ color: BLUE, fontWeight: 700, fontSize: '18px', textAlign: 'center', marginBottom: '16px', fontFamily: "'Inter', sans-serif", letterSpacing: '-0.01em' }}>
-                  Dia 1 – O Diagnóstico
-                </p>
+                {/* Content */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+                  {/* Sessions list */}
+                  <div style={{ flex: '1 1 320px', minWidth: '280px', background: 'rgba(0,0,0,0.45)', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.09)', padding: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                      <p style={{ margin: 0, color: 'rgba(255,255,255,0.85)', fontSize: '11px', fontFamily: "'Inter', sans-serif", fontWeight: 700 }}>
+                        Sua trilha
+                      </p>
+                      <p style={{ margin: 0, color: 'rgba(255,255,255,0.45)', fontSize: '10px', fontFamily: "'Inter', sans-serif" }}>
+                        2/7 em andamento
+                      </p>
+                    </div>
 
-                {/* Controls */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginBottom: '16px' }}>
-                  {/* Skip back 15s */}
-                  <div style={{ width: '40px', height: '40px', borderRadius: '50%', border: `1.5px solid rgba(212,175,55,0.6)`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/>
-                    </svg>
-                    <span style={{ color: BLUE, fontSize: '8px', fontFamily: "'Inter', sans-serif", fontWeight: 600, lineHeight: 1, marginTop: '1px' }}>15s</span>
-                  </div>
-                  {/* Play */}
-                  <div style={{ width: '54px', height: '54px', borderRadius: '50%', background: BLUE, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0D0D0D">
-                      <polygon points="5 3 19 12 5 21 5 3"/>
-                    </svg>
-                  </div>
-                  {/* Skip forward 15s */}
-                  <div style={{ width: '40px', height: '40px', borderRadius: '50%', border: `1.5px solid rgba(212,175,55,0.6)`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/>
-                    </svg>
-                    <span style={{ color: BLUE, fontSize: '8px', fontFamily: "'Inter', sans-serif", fontWeight: 600, lineHeight: 1, marginTop: '1px' }}>15s</span>
-                  </div>
-                </div>
-
-                {/* Bottom bar */}
-                <div style={{ background: 'rgba(0,0,0,0.6)', borderRadius: '12px', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '7px', background: 'rgba(212,175,55,0.08)', border: `1px solid rgba(212,175,55,0.35)`, borderRadius: '100px', padding: '5px 10px' }}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
-                    </svg>
-                    <div>
-                      <p style={{ color: 'rgba(212,175,55,0.6)', fontSize: '8px', fontFamily: "'Inter', sans-serif", fontWeight: 700, letterSpacing: '0.08em', lineHeight: 1 }}>SONS DE FUNDO</p>
-                      <p style={{ color: BLUE, fontSize: '11px', fontFamily: "'Inter', sans-serif", fontWeight: 700, lineHeight: 1.2 }}>432Hz</p>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '8px' }}>
+                      {([
+                        { day: 1, title: 'O Diagnóstico', done: true },
+                        { day: 2, title: 'Quebrando o Contrato', done: false, active: true },
+                        { day: 3, title: 'A Frequência do Receber', done: false },
+                        { day: 4, title: 'Você no Futuro Próspero', done: false },
+                        { day: 5, title: 'Gratidão Como Imã', done: false },
+                        { day: 6, title: 'Merecimento Sem Culpa', done: false },
+                        { day: 7, title: 'A Nova Identidade', done: false },
+                      ] as { day: number; title: string; done: boolean; active?: boolean }[]).map((s) => (
+                        <div
+                          key={s.day}
+                          style={{
+                            padding: '8px 8px',
+                            borderRadius: '12px',
+                            background: s.active ? 'rgba(212,175,55,0.18)' : 'rgba(255,255,255,0.06)',
+                            border: s.active ? '1px solid rgba(212,175,55,0.35)' : '1px solid rgba(255,255,255,0.06)',
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', marginBottom: '4px' }}>
+                            <p style={{ margin: 0, color: s.active ? 'white' : 'rgba(255,255,255,0.75)', fontSize: '10px', fontFamily: "'Inter', sans-serif", fontWeight: 800 }}>
+                              Dia {s.day}
+                            </p>
+                            {s.done ? (
+                              <div style={{ width: '16px', height: '16px', borderRadius: '6px', background: 'rgba(212,175,55,0.18)', border: '1px solid rgba(212,175,55,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                              </div>
+                            ) : s.active ? (
+                              <div style={{ fontSize: '9px', fontFamily: "'Inter', sans-serif", fontWeight: 800, color: 'rgba(255,255,255,0.9)', background: 'rgba(212,175,55,0.28)', border: '1px solid rgba(212,175,55,0.4)', padding: '2px 6px', borderRadius: '999px' }}>
+                                agora
+                              </div>
+                            ) : null}
+                          </div>
+                          <p style={{ margin: 0, color: s.done ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.78)', fontSize: '9px', fontFamily: "'Inter', sans-serif", fontWeight: s.active ? 800 : 600, whiteSpace: 'normal', lineHeight: 1.15, letterSpacing: '-0.01em' }}>
+                            {s.title}
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: `1.5px solid rgba(212,175,55,0.35)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                    </svg>
-                  </div>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: `1.5px solid rgba(212,175,55,0.35)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                    </svg>
+
+                  {/* Player preview */}
+                  <div style={{ flex: '1 1 220px', minWidth: '220px', background: 'rgba(0,0,0,0.45)', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.09)', padding: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                      <div style={{ width: '64px', height: '64px', borderRadius: '12px', overflow: 'hidden', flexShrink: 0, boxShadow: '0 10px 26px rgba(0,0,0,0.55)' }}>
+                        <img src="/dia2.webp" alt="Dia 2" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                      </div>
+                      <div style={{ minWidth: 0 }}>
+                        <p style={{ margin: 0, color: 'rgba(212,175,55,0.85)', fontSize: '9px', fontFamily: "'Inter', sans-serif", fontWeight: 800, letterSpacing: '0.08em' }}>
+                          AGORA TOCANDO
+                        </p>
+                        <p style={{ margin: '2px 0 0', color: 'white', fontSize: '11px', fontFamily: "'Inter', sans-serif", fontWeight: 800, whiteSpace: 'normal', lineHeight: 1.15, letterSpacing: '-0.01em' }}>
+                          Dia 2 · Quebrando o Contrato
+                        </p>
+                        <p style={{ margin: '2px 0 0', color: 'rgba(255,255,255,0.45)', fontSize: '10px', fontFamily: "'Inter', sans-serif" }}>
+                          ~20 min · sem anúncios
+                        </p>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '10px' }}>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '999px', border: '1.5px solid rgba(212,175,55,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/>
+                        </svg>
+                      </div>
+                      <div style={{ width: '40px', height: '40px', borderRadius: '999px', background: BLUE, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 18px rgba(212,175,55,0.35)' }}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#0D0D0D"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                      </div>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '999px', border: '1.5px solid rgba(212,175,55,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/>
+                        </svg>
+                      </div>
+                    </div>
+
+                    <div style={{ paddingBottom: '2px' }}>
+                      <div style={{ background: 'rgba(255,255,255,0.12)', height: '3px', borderRadius: '4px', marginBottom: '6px', position: 'relative' }}>
+                        <div style={{ width: '28%', height: '100%', background: BLUE, borderRadius: '4px', position: 'relative' }}>
+                          <div style={{ position: 'absolute', right: '-5px', top: '50%', transform: 'translateY(-50%)', width: '9px', height: '9px', borderRadius: '50%', background: BLUE }} />
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', fontFamily: "'Inter', sans-serif" }}>03:12</span>
+                        <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '10px', fontFamily: "'Inter', sans-serif" }}>11:40</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Progress bar */}
-                <div style={{ paddingBottom: '16px' }}>
-                  <div style={{ background: 'rgba(255,255,255,0.1)', height: '3px', borderRadius: '4px', marginBottom: '6px', cursor: 'pointer', position: 'relative' }}>
-                    <div style={{ width: '4%', height: '100%', background: BLUE, borderRadius: '4px', position: 'relative' }}>
-                      <div style={{ position: 'absolute', right: '-5px', top: '50%', transform: 'translateY(-50%)', width: '10px', height: '10px', borderRadius: '50%', background: BLUE }} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', marginTop: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '7px', minWidth: 0 }}>
+                    <div style={{ width: '18px', height: '18px', borderRadius: '6px', background: 'rgba(212,175,55,0.16)', border: '1px solid rgba(212,175,55,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
                     </div>
+                    <p style={{ margin: 0, color: 'rgba(255,255,255,0.6)', fontSize: '10px', fontFamily: "'Inter', sans-serif", whiteSpace: 'normal', overflowWrap: 'anywhere', lineHeight: 1.15 }}>
+                      Dias 1–7 desbloqueados · sem assinatura
+                    </p>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: BLUE, fontSize: '10px', fontFamily: "'Inter', sans-serif" }}>00:00</span>
-                    <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '10px', fontFamily: "'Inter', sans-serif" }}>08:05</span>
-                  </div>
+                  <p style={{ margin: 0, color: 'rgba(255,255,255,0.6)', fontSize: '10px', fontFamily: "'Inter', sans-serif" }}>
+                    R$67 uma vez
+                  </p>
                 </div>
               </div>
             </div>
