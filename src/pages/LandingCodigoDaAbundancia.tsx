@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Check, Plus } from 'lucide-react';
+import { Check, Plus, Brain, Magnet } from 'lucide-react';
 import { trackEvent } from '../lib/meta';
 
 const TOTAL_PARTICIPANTS = 4247;
@@ -217,10 +217,10 @@ const SessionListMockup = ({ rotate = 1.5 }: { rotate?: number }) => (
         {([
           { day: 1, title: 'O Diagnóstico', durationMin: SESSION_DURATIONS_MIN[1], done: true },
           { day: 2, title: 'Quebrando o Contrato', durationMin: SESSION_DURATIONS_MIN[2], done: false, active: true },
-          { day: 3, title: 'A Frequência do Receber', durationMin: SESSION_DURATIONS_MIN[3], done: false },
-          { day: 4, title: 'Você no Futuro Próspero', durationMin: SESSION_DURATIONS_MIN[4], done: false },
-          { day: 5, title: 'Gratidão Como Imã', durationMin: SESSION_DURATIONS_MIN[5], done: false },
-          { day: 6, title: 'Merecimento Sem Culpa', durationMin: SESSION_DURATIONS_MIN[6], done: false },
+          { day: 3, title: 'O canal que seu cérebro fechou para se proteger.', durationMin: SESSION_DURATIONS_MIN[3], done: false },
+          { day: 4, title: 'A versão de você que nunca aprendeu a ter.', durationMin: SESSION_DURATIONS_MIN[4], done: false },
+          { day: 5, title: 'Por que você sabota quando está quase lá.', durationMin: SESSION_DURATIONS_MIN[5], done: false },
+          { day: 6, title: 'A crença que você nem sabe que tem.', durationMin: SESSION_DURATIONS_MIN[6], done: false },
           { day: 7, title: 'A Nova Identidade', durationMin: SESSION_DURATIONS_MIN[7], done: false },
         ] as { day: number; title: string; durationMin: number; done: boolean; active?: boolean }[]).map((s) => (
           <div key={s.day} style={{
@@ -488,6 +488,10 @@ const LandingCodigoDaAbundancia = () => {
   };
 
   const faqs = [
+    {
+      question: 'Já tentei outros programas de mentalidade e não funcionou',
+      answer: 'Este protocolo não trabalha com crença ou motivação — trabalha com repetição neurológica. Crenças mudam devagar. Padrões neurais mudam por exposição repetida. Você não precisa acreditar. Precisa ouvir.',
+    },
     {
       question: 'Funciona mesmo se eu não acredito nisso?',
       answer: 'A neuroplasticidade não precisa da sua crença para funcionar. Seu cérebro já é reprogramado por experiências todo dia — com ou sem a sua permissão. O protocolo só usa esse mecanismo de forma intencional. Você não precisa acreditar. Precisa só fazer.',
@@ -788,10 +792,10 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                       {([
                         { day: 1, title: 'O Diagnóstico', done: true },
                         { day: 2, title: 'Quebrando o Contrato', done: false, active: true },
-                        { day: 3, title: 'A Frequência do Receber', done: false },
-                        { day: 4, title: 'Você no Futuro Próspero', done: false },
-                        { day: 5, title: 'Gratidão Como Imã', done: false },
-                        { day: 6, title: 'Merecimento Sem Culpa', done: false },
+                        { day: 3, title: 'O canal que seu cérebro fechou para se proteger.', done: false },
+                        { day: 4, title: 'A versão de você que nunca aprendeu a ter.', done: false },
+                        { day: 5, title: 'Por que você sabota quando está quase lá.', done: false },
+                        { day: 6, title: 'A crença que você nem sabe que tem.', done: false },
                         { day: 7, title: 'A Nova Identidade', done: false },
                       ] as { day: number; title: string; done: boolean; active?: boolean }[]).map((s) => (
                         <div
@@ -961,6 +965,38 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           </div>
         </section>
 
+        {/* Ponte narrativa */}
+        <div className="text-center px-5 py-8 bg-white">
+          <p style={{ fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', color: DARK, fontWeight: 700, lineHeight: 1.35 }}>
+            Veja o que acontece em cada sessão — e por que a ordem importa.
+          </p>
+        </div>
+
+        {/* ══════════════════════════════════════════
+            DEPOIMENTO FERNANDA — antes do editorial
+        ══════════════════════════════════════════ */}
+        <section className="px-5 sm:px-6 lg:px-8 py-10 bg-white">
+          <div className="max-w-3xl mx-auto">
+            <div className="p-7 sm:p-9 rounded-3xl relative overflow-hidden" style={{ background: 'white', border: '1.5px solid rgba(0,0,0,0.07)', boxShadow: '0 16px 48px rgba(212,175,55,0.12)', borderTop: `4px solid ${BLUE}` }}>
+              <span className="absolute top-3 right-6 select-none pointer-events-none" style={{ fontSize: '8rem', lineHeight: 1, color: 'rgba(212,175,55,0.06)', fontFamily: "'Inter', sans-serif" }}>"</span>
+              <div className="flex gap-1 mb-5">
+                {[...Array(5)].map((_, j) => <svg key={j} className="w-5 h-5" fill="#D4AF37" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>)}
+              </div>
+              <p className="text-base sm:text-lg leading-relaxed mb-6 relative z-10" style={{ color: BODY }}>
+                "Fiz o protocolo sem muita expectativa. No Dia 2, quando ele fala sobre o contrato inconsciente com a escassez, eu chorei. Lembrei da minha mãe dizendo que dinheiro é difícil. Carregava isso há 30 anos. Dois meses depois fechei meu maior contrato —{' '}
+                <strong style={{ color: BLUE }}>R$4.800 num único cliente.</strong>"
+              </p>
+              <div className="flex items-center gap-3">
+                <img src="/avatar-fernanda.webp" alt="Fernanda Rocha" className="w-12 h-12 rounded-full object-cover bg-gray-200 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-sm" style={{ color: DARK }}>Fernanda Rocha, 37</p>
+                  <p className="text-xs" style={{ color: '#5C5140' }}>Nutricionista autônoma · Curitiba</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ══════════════════════════════════════════
             EDITORIAL TITLE
         ══════════════════════════════════════════ */}
@@ -1052,7 +1088,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                   DIA 3 · A FREQUÊNCIA DO RECEBER
                 </span>
                 <h3 className="feature-title" style={{ fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', color: DARK, fontWeight: 700, lineHeight: 1.25, marginBottom: '16px' }}>
-                  Abra o canal que estava bloqueado.
+                  O canal que seu cérebro fechou para se proteger.
                 </h3>
                 <p className="feature-body text-base sm:text-lg leading-relaxed" style={{ color: BODY, lineHeight: '1.65' }}>
                   A maioria das pessoas sabe pedir. Pouquíssimas sabem receber. Você abre o canal que estava bloqueado e começa a perceber oportunidades que antes eram invisíveis. Não é magia — <strong>seu cérebro finalmente calibrado para ver o que sempre esteve ali.</strong>
@@ -1093,6 +1129,15 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
         </section>
 
         {/* ══════════════════════════════════════════
+            LINHA DE TENSÃO
+        ══════════════════════════════════════════ */}
+        <div className="text-center px-5 py-10 bg-white">
+          <p style={{ fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.2rem, 3vw, 1.75rem)', color: DARK, fontWeight: 700, lineHeight: 1.35 }}>
+            Cada sessão dura menos que um café. E opera enquanto você não está prestando atenção.
+          </p>
+        </div>
+
+        {/* ══════════════════════════════════════════
             CTA INTERMEDIÁRIO
         ══════════════════════════════════════════ */}
         <section className="px-5 sm:px-6 lg:px-8 py-16 sm:py-20 text-center bg-white">
@@ -1114,8 +1159,8 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
               <div className="p-7 sm:p-8 rounded-2xl" style={{ background: 'white', border: '1.5px solid rgba(0,0,0,0.07)', boxShadow: SHADOW }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5" style={{ background: `rgba(212,175,55,0.1)` }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44l-2.04-11A2.5 2.5 0 0 1 7.5 5.5"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44l2.04-11a2.5 2.5 0 0 0-2.5-2.56"/></svg>
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5" style={{ background: 'rgba(212,175,55,0.18)', border: '1px solid rgba(212,175,55,0.3)' }}>
+                  <Brain width="24" height="24" stroke={BLUE} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                 </div>
                 <h4 className="font-bold text-base sm:text-lg mb-3" style={{ color: DARK }}>Neuroplasticidade aplicada</h4>
                 <p className="text-sm sm:text-base leading-relaxed" style={{ color: BODY, lineHeight: '1.65' }}>
@@ -1126,8 +1171,8 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                 </p>
               </div>
               <div className="p-7 sm:p-8 rounded-2xl" style={{ background: 'white', border: '1.5px solid rgba(0,0,0,0.07)', boxShadow: SHADOW }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5" style={{ background: `rgba(247,231,183,0.15)` }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={LILAC} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5" style={{ background: 'rgba(212,175,55,0.18)', border: '1px solid rgba(212,175,55,0.3)' }}>
+                  <Magnet width="24" height="24" stroke={BLUE} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                 </div>
                 <h4 className="font-bold text-base sm:text-lg mb-3" style={{ color: DARK }}>Lei da Atração emocional</h4>
                 <p className="text-sm sm:text-base leading-relaxed" style={{ color: BODY, lineHeight: '1.65' }}>
@@ -1143,11 +1188,11 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
               <p className="text-sm sm:text-base font-semibold text-center" style={{ color: BLUE }}>
                 Funciona até para quem não acredita. A neuroplasticidade não precisa da sua permissão.
               </p>
-              <p className="text-base sm:text-lg text-gray-300 mb-3">
+              <p className="text-base sm:text-lg text-gray-300 mb-3 text-center">
                 O Código da Abundância — 7 sessões completas — por
               </p>
-              <p className="font-extrabold leading-none mb-3" style={{ fontSize: 'clamp(3.5rem, 10vw, 5rem)', color: '#F5C842' }}>R$67</p>
-              <p className="text-sm text-gray-400">uma única vez · Sem renovação · Sem assinatura</p>
+              <p className="font-extrabold leading-none mb-3 text-center" style={{ fontSize: 'clamp(3.5rem, 10vw, 5rem)', color: '#F5C842' }}>R$67</p>
+              <p className="text-sm text-gray-400 text-center">uma única vez · Sem renovação · Sem assinatura</p>
             </div>
             <div className="text-center mt-10">
               <CtaBtn label="Começar agora — R$67 →" large />
@@ -1169,25 +1214,6 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           {/* Cards */}
           <div className="px-5 sm:px-6 lg:px-8 py-12 sm:py-16 bg-white">
             <div className="max-w-5xl mx-auto fade-in">
-              {/* Featured testimonial */}
-              <div className="p-7 sm:p-9 rounded-3xl mb-6 relative overflow-hidden" style={{ background: 'white', border: '1.5px solid rgba(0,0,0,0.07)', boxShadow: '0 16px 48px rgba(212,175,55,0.12)', borderTop: `4px solid ${BLUE}` }}>
-                <span className="absolute top-3 right-6 select-none pointer-events-none" style={{ fontSize: '8rem', lineHeight: 1, color: 'rgba(212,175,55,0.06)', fontFamily: "'Inter', sans-serif" }}>"</span>
-                <div className="flex gap-1 mb-5">
-                  {[...Array(5)].map((_, j) => <svg key={j} className="w-5 h-5" fill="#D4AF37" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>)}
-                </div>
-                <p className="text-base sm:text-lg leading-relaxed mb-6 relative z-10" style={{ color: BODY }}>
-                  "Fiz o protocolo sem muita expectativa. No Dia 2, quando ele fala sobre o contrato inconsciente com a escassez, eu chorei. Lembrei da minha mãe dizendo que dinheiro é difícil. Carregava isso há 30 anos. Dois meses depois fechei meu maior contrato —{' '}
-                  <strong style={{ color: BLUE }}>R$4.800 num único cliente.</strong>"
-                </p>
-                <div className="flex items-center gap-3">
-                  <img src="/avatar-fernanda.webp" alt="Fernanda Rocha" className="w-12 h-12 rounded-full object-cover bg-gray-200 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold text-sm" style={{ color: DARK }}>Fernanda Rocha, 37</p>
-                    <p className="text-xs" style={{ color: '#5C5140' }}>Nutricionista autônoma · Curitiba</p>
-                  </div>
-                </div>
-              </div>
-
               {/* 2x2 grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
                 {[
@@ -1257,14 +1283,13 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                 {/* Anchor price */}
                 <div className="text-center mb-6 py-4 rounded-2xl" style={{ background: 'rgba(212,175,55,0.06)', border: '1px solid rgba(212,175,55,0.15)' }}>
                   <p className="text-sm mb-1" style={{ color: '#5C5140' }}>
-                    Valor real: <span style={{ textDecoration: 'line-through' }}>R$335</span>
+                    Valor real: <span style={{ textDecoration: 'line-through' }}>R$280</span>
                   </p>
-                  <p className="font-bold text-lg" style={{ color: BLUE }}>Hoje: R$67 <span className="text-sm font-semibold">(80% off)</span></p>
+                  <p className="font-bold text-lg" style={{ color: BLUE }}>Hoje: R$67 <span className="text-sm font-semibold">(76% off)</span></p>
                 </div>
                 <div className="space-y-4 mb-8">
                   {[
                     { item: '7 sessões de reprogramação neurológica — protocolo progressivo (6–8 min cada)', value: 'De R$280' },
-                    { item: 'Áudio SOS: Ansiedade Financeira Aguda — para crises, decisões difíceis e bloqueios imediatos', value: 'De R$47' },
                     { item: 'Acesso vitalício — ouça quantas vezes quiser, para sempre', value: '' },
                     { item: 'Disponível no app Ecotopia — iOS e Android', value: '' },
                   ].map((item, i) => (
@@ -1297,12 +1322,12 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                 </div>
 
                 <div className="flex justify-center">
-                  <CtaBtn label="Quero meu Código da Abundância →" />
+                  <CtaBtn label="Começar agora — R$67 →" />
                 </div>
 
                 {/* Social counter */}
                 <p className="text-center text-sm mt-3 font-medium" style={{ color: '#5C5140' }}>
-                  🔥 23 pessoas compraram nas últimas 2 horas
+                  🔥 Mais de 4.247 pessoas já começaram.
                 </p>
 
                 {/* Garantia inline */}
@@ -1377,7 +1402,6 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
             <div className="max-w-sm mx-auto space-y-3 mb-10 text-left">
               {[
                 '7 sessões de reprogramação neurológica — protocolo progressivo',
-                'Áudio SOS: Ansiedade Financeira Aguda incluso',
                 'Acesso vitalício no app Ecotopia',
                 'Garantia de 7 dias — teste sem risco',
                 'Pagamento único — R$67',
@@ -1397,7 +1421,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-bold text-xl sm:text-2xl transition-all hover:opacity-95 hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
               style={{ background: 'white', color: BLUE, borderRadius: '100px', padding: '20px 48px', boxShadow: '0 8px 40px rgba(0,0,0,0.2)' }}
             >
-              {loadingPayment ? 'Aguarde...' : 'Sim, eu escolho mudar — R$67 →'}
+              {loadingPayment ? 'Aguarde...' : 'Começar agora — R$67 →'}
             </button>
 
             <p className="text-xs sm:text-sm mt-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
