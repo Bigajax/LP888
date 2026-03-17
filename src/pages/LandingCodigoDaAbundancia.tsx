@@ -557,7 +557,12 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
         <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8" style={{ height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
           {/* Logo */}
-          <img src="/logo-ecotopia.webp" alt="Ecotopia" style={{ height: '56px', width: 'auto' }} />
+          <img
+            src="/logo-ecotopia.webp"
+            alt="Ecotopia"
+            style={{ height: '56px', width: 'auto', cursor: 'pointer' }}
+            onClick={() => document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' })}
+          />
 
           {/* Links centrais — desktop only */}
           <div className="hidden md:flex items-center gap-7">
