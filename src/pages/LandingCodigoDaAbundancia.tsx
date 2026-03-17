@@ -965,13 +965,6 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           </div>
         </section>
 
-        {/* Ponte narrativa */}
-        <div className="text-center px-5 py-8 bg-white">
-          <p style={{ fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', color: DARK, fontWeight: 700, lineHeight: 1.35 }}>
-            Veja o que acontece em cada sessão — e por que a ordem importa.
-          </p>
-        </div>
-
         {/* ══════════════════════════════════════════
             DEPOIMENTO FERNANDA — antes do editorial
         ══════════════════════════════════════════ */}
@@ -1009,6 +1002,13 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
             </h2>
           </div>
         </section>
+
+        {/* Ponte narrativa */}
+        <div className="text-center px-5 py-8 bg-white">
+          <p style={{ fontFamily: "'GT Walsheim', sans-serif", fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', color: DARK, fontWeight: 700, lineHeight: 1.35 }}>
+            Veja o que acontece em cada sessão — e por que a ordem importa.
+          </p>
+        </div>
 
         {/* ══════════════════════════════════════════
             FEATURE 1 — texto esquerda / mockup direita
