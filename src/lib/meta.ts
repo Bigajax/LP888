@@ -74,8 +74,8 @@ function firePixel(
   eventId: string,
 ): void {
   if (typeof window === 'undefined' || !(window as any).fbq) return;
-  // 4º argumento { eventID } é o mecanismo de deduplicação do Meta Pixel
-  (window as any).fbq('track', eventName, params, { eventID: eventId });
+  const method = STANDARD_EVENTS.has(eventName) ? 'track' : 'trackCustom';
+  (window as any).fbq(method, eventName, params, { eventID: eventId });
 }
 
 // ─── CAPI fire ────────────────────────────────────────────────────────────────
@@ -85,7 +85,16 @@ export interface TrackParams {
   currency?: string;
   contentIds?: string[];
   contentType?: string;
+  [key: string]: unknown; // permite propriedades customizadas (section_name, faq_question, etc.)
 }
+
+// Eventos padrão Meta — todos os outros usam fbq('trackCustom')
+const STANDARD_EVENTS = new Set([
+  'PageView', 'ViewContent', 'Search', 'AddToCart', 'AddToWishlist',
+  'InitiateCheckout', 'AddPaymentInfo', 'Purchase', 'Lead',
+  'CompleteRegistration', 'Contact', 'Donate', 'Schedule',
+  'StartTrial', 'SubmitApplication', 'Subscribe',
+]);
 
 /** Envia o evento ao endpoint Vercel serverless que chama a CAPI. Nunca lança. */
 async function fireCAPI(
@@ -124,12 +133,15 @@ export async function trackEvent(
 ): Promise<void> {
   const eventId = crypto.randomUUID();
 
-  const pixelParams: Record<string, unknown> = {};
-  if (params.value !== undefined) pixelParams.value = params.value;
-  if (params.currency) pixelParams.currency = params.currency;
-  if (params.contentIds?.length) {
-    pixelParams.content_ids = params.contentIds;
-    pixelParams.content_type = params.contentType ?? 'product';
+  const { value, currency, contentIds, contentType, ...customProps } = params;
+
+  // Monta params do pixel — inclui props customizadas para eventos trackCustom
+  const pixelParams: Record<string, unknown> = { ...customProps };
+  if (value !== undefined) pixelParams.value = value;
+  if (currency) pixelParams.currency = currency;
+  if (contentIds?.length) {
+    pixelParams.content_ids = contentIds;
+    pixelParams.content_type = contentType ?? 'product';
   }
 
   firePixel(eventName, pixelParams, eventId);

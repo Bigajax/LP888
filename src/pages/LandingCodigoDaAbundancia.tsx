@@ -432,7 +432,11 @@ const LandingCodigoDaAbundancia = () => {
   const toggleFaq = (index: number) => {
     setOpenFaqs(prev => {
       const next = new Set(prev);
-      next.has(index) ? next.delete(index) : next.add(index);
+      const isOpening = !next.has(index);
+      isOpening ? next.add(index) : next.delete(index);
+      if (isOpening) {
+        trackEvent('FaqOpen', { faq_question: faqs[index].question }).catch(() => {});
+      }
       return next;
     });
   };
@@ -573,7 +577,10 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
             ].map(({ label, id }) => (
               <button
                 key={id}
-                onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => {
+                  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+                  trackEvent('NavClick', { section_name: id }).catch(() => {});
+                }}
                 className="text-sm font-medium transition-colors hover:opacity-70"
                 style={{ color: DARK, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
               >
@@ -585,14 +592,20 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           {/* Direita */}
           <div className="flex items-center gap-3">
             <button
-              onClick={scrollToOferta}
+              onClick={() => {
+                scrollToOferta();
+                trackEvent('HeaderLoginClick').catch(() => {});
+              }}
               className="hidden sm:block text-sm font-medium transition-opacity hover:opacity-60"
               style={{ color: DARK, background: 'none', border: 'none', cursor: 'pointer' }}
             >
               Entrar
             </button>
             <button
-              onClick={scrollToOferta}
+              onClick={() => {
+                scrollToOferta();
+                trackEvent('InitiateCheckout', { value: 67, currency: 'BRL', contentIds: [PRODUCT_KEY] }).catch(() => {});
+              }}
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-all hover:opacity-90 active:scale-95"
               style={{
                 background: BLUE,
@@ -1071,7 +1084,10 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                   <strong>É a sessão que mais faz chorar. E a que mais transforma.</strong>
                 </p>
                 <button
-                  onClick={scrollToOferta}
+                  onClick={() => {
+                    scrollToOferta();
+                    trackEvent('ProtocolDetailsClick').catch(() => {});
+                  }}
                   className="inline-flex items-center gap-1 font-semibold text-sm transition-all hover:gap-2"
                   style={{ color: BLUE }}
                 >
