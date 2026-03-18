@@ -315,7 +315,8 @@ const ProgressMockup = ({ rotate = -1.5 }: { rotate?: number }) => (
 
 const LandingCodigoDaAbundancia = () => {
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
-  const [loadingPayment, setLoadingPayment] = useState(false);
+  const [mpModal, setMpModal] = useState<'idle' | 'loading' | 'error'>('idle');
+  const [mpErrorMsg, setMpErrorMsg] = useState('');
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
   const [displayCount, setDisplayCount] = useState(0);
@@ -470,8 +471,8 @@ const LandingCodigoDaAbundancia = () => {
   };
 
   const handleCTA = async () => {
-    if (loadingPayment) return;
-    setLoadingPayment(true);
+    if (mpModal === 'loading') return;
+    setMpModal('loading');
     trackEvent('InitiateCheckout', {
       value: 67,
       currency: 'BRL',
@@ -493,18 +494,20 @@ const LandingCodigoDaAbundancia = () => {
       const publicKey = import.meta.env.VITE_MP_PUBLIC_KEY;
       const preferenceId = data.preference_id ?? new URL(data.init_point).searchParams.get('pref_id');
       if (preferenceId && publicKey) {
+        // Fecha nossa modal antes do checkout do MP abrir
+        setMpModal('idle');
         const mp = new (window as any).MercadoPago(publicKey, { locale: 'pt-BR' });
         mp.checkout({ preference: { id: preferenceId }, autoOpen: true });
       } else if (data.init_point) {
+        setMpModal('idle');
         window.location.href = data.init_point;
       } else {
         throw new Error('Resposta inválida do servidor');
       }
     } catch (err) {
       console.error(err);
-      alert('Não foi possível iniciar o pagamento. Tente novamente em instantes.');
-    } finally {
-      setLoadingPayment(false);
+      setMpErrorMsg('Não foi possível iniciar o pagamento. Tente novamente em instantes.');
+      setMpModal('error');
     }
   };
 
@@ -541,7 +544,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
   <button
     onClick={handleCTA}
     onPointerEnter={() => loadMpSdk().catch(() => {})}
-    disabled={loadingPayment}
+    disabled={mpModal === 'loading'}
     className="cta-btn inline-flex items-center justify-center gap-2 font-bold text-white transition-all hover:opacity-90 hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
     style={{
       background: white ? 'white' : BLUE,
@@ -557,7 +560,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
       margin: large ? '0 auto' : undefined,
     }}
   >
-    {loadingPayment ? 'Aguarde...' : label}
+    {label}
   </button>
 );
 
@@ -1458,11 +1461,11 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
 
             <button
               onClick={handleCTA}
-              disabled={loadingPayment}
+              disabled={mpModal === 'loading'}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-bold text-xl sm:text-2xl transition-all hover:opacity-95 hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
               style={{ background: 'white', color: BLUE, borderRadius: '100px', padding: '20px 48px', boxShadow: '0 8px 40px rgba(0,0,0,0.2)' }}
             >
-              {loadingPayment ? 'Aguarde...' : 'Começar agora — R$67 →'}
+              {'Começar agora — R$67 →'}
             </button>
 
             <p className="text-xs sm:text-sm mt-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
@@ -1506,7 +1509,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
       >
         <button
           onClick={handleCTA}
-          disabled={loadingPayment}
+          disabled={mpModal === 'loading'}
           style={{
             background: BLUE,
             color: 'white',
@@ -1520,7 +1523,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
             transition: 'opacity 200ms',
           }}
         >
-          {loadingPayment ? 'Aguarde...' : 'Começar agora — R$67 →'}
+          {'Começar agora — R$67 →'}
         </button>
       </div>
 
@@ -1615,7 +1618,110 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
         .shield-pulse {
           animation: shield-pulse 2.5s ease-in-out infinite;
         }
+        @keyframes mp-spin {
+          to { transform: rotate(360deg); }
+        }
       `}</style>
+
+      {/* ── Modal de Checkout ── */}
+      {mpModal !== 'idle' && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, zIndex: 10000,
+            background: 'rgba(5,5,5,0.72)',
+            backdropFilter: 'blur(6px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '20px',
+          }}
+          onClick={mpModal === 'error' ? () => setMpModal('idle') : undefined}
+        >
+          <div
+            style={{
+              background: 'white',
+              borderRadius: '24px',
+              padding: '44px 32px 36px',
+              maxWidth: '360px',
+              width: '100%',
+              textAlign: 'center',
+              boxShadow: '0 28px 80px rgba(0,0,0,0.35)',
+              fontFamily: "'Inter', sans-serif",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Logo */}
+            <img src="/logo-ecotopia.webp" alt="Ecotopia" style={{ height: '36px', width: 'auto', margin: '0 auto 24px', opacity: 0.7 }} />
+
+            {mpModal === 'loading' && (
+              <>
+                {/* Spinner */}
+                <div style={{
+                  width: '52px', height: '52px',
+                  borderRadius: '50%',
+                  border: `3px solid ${LILAC}`,
+                  borderTopColor: BLUE,
+                  margin: '0 auto 20px',
+                  animation: 'mp-spin 0.85s linear infinite',
+                }} />
+                <p style={{ fontWeight: 700, fontSize: '17px', color: DARK, marginBottom: '8px' }}>
+                  Preparando pagamento
+                </p>
+                <p style={{ fontSize: '13px', color: '#9B9B9B', lineHeight: 1.6 }}>
+                  Conectando com segurança ao Mercado Pago…
+                </p>
+                {/* Selos de segurança */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '24px' }}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BLUE} strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <span style={{ fontSize: '11px', color: '#A0A0A0' }}>Ambiente seguro · SSL · Dados protegidos</span>
+                </div>
+              </>
+            )}
+
+            {mpModal === 'error' && (
+              <>
+                <div style={{
+                  width: '52px', height: '52px', borderRadius: '50%',
+                  background: '#FFF3F3', border: '2px solid #FFD4D4',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  margin: '0 auto 20px',
+                }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E53E3E" strokeWidth="2.5" strokeLinecap="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+                <p style={{ fontWeight: 700, fontSize: '17px', color: DARK, marginBottom: '8px' }}>
+                  Algo deu errado
+                </p>
+                <p style={{ fontSize: '13px', color: '#6B6B6B', lineHeight: 1.6, marginBottom: '28px' }}>
+                  {mpErrorMsg}
+                </p>
+                <button
+                  onClick={handleCTA}
+                  style={{
+                    width: '100%', padding: '13px', borderRadius: '12px',
+                    background: BLUE, color: 'white',
+                    fontWeight: 700, fontSize: '15px',
+                    border: 'none', cursor: 'pointer',
+                    marginBottom: '10px',
+                  }}
+                >
+                  Tentar novamente
+                </button>
+                <button
+                  onClick={() => setMpModal('idle')}
+                  style={{
+                    width: '100%', padding: '11px', borderRadius: '12px',
+                    background: 'transparent', color: '#9B9B9B',
+                    fontWeight: 500, fontSize: '13px',
+                    border: '1px solid #E8E8E8', cursor: 'pointer',
+                  }}
+                >
+                  Fechar
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
