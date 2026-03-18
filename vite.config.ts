@@ -22,8 +22,16 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react(), metaPixelNoscriptPlugin(metaPixelId)],
-    optimizeDeps: {
-      exclude: ['lucide-react'],
+    build: {
+      target: 'es2015',
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+            'lucide': ['lucide-react'],
+          },
+        },
+      },
     },
   };
 });

@@ -134,7 +134,7 @@ const PlayerMockup = ({ day, title, progress = 38, rotate = -1.5, durationMin }:
       {/* Cover art */}
       <div style={{ padding: '10px 0 0', display: 'flex', justifyContent: 'center' }}>
         <div style={{ width: '148px', height: '148px', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 16px 40px rgba(0,0,0,0.5)' }}>
-          <img src={`/dia${day}.webp`} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src={`/dia${day}.webp`} alt={title} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
       </div>
 
@@ -231,7 +231,7 @@ const SessionListMockup = ({ rotate = 1.5 }: { rotate?: number }) => (
           }}>
             {/* Thumbnail */}
             <div style={{ width: '36px', height: '36px', borderRadius: '8px', overflow: 'hidden', flexShrink: 0, opacity: s.done ? 0.5 : 1 }}>
-              <img src={`/dia${s.day}.webp`} alt={`Dia ${s.day}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={`/dia${s.day}.webp`} alt={`Dia ${s.day}`} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <p style={{ color: s.active ? 'white' : s.done ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.75)', fontSize: '10px', fontWeight: s.active ? 700 : 400, margin: '0 0 1px', whiteSpace: 'normal', lineHeight: 1.15, letterSpacing: '-0.01em' }}>
@@ -270,7 +270,7 @@ const ProgressMockup = ({ rotate = -1.5 }: { rotate?: number }) => (
         {[1,2,3,4,5,6,7].map(d => (
           <div key={d} style={{ position: 'relative' }}>
             <div style={{ borderRadius: '9px', overflow: 'hidden', border: d <= 6 ? `1.5px solid rgba(212,175,55,0.5)` : '1.5px solid rgba(255,255,255,0.1)', opacity: d <= 6 ? 1 : 0.3 }}>
-              <img src={`/dia${d}.webp`} alt={`Dia ${d}`} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', display: 'block' }} />
+              <img src={`/dia${d}.webp`} alt={`Dia ${d}`} loading="lazy" decoding="async" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', display: 'block' }} />
             </div>
             {d <= 6 && (
               <div style={{ position: 'absolute', top: '3px', right: '3px', width: '14px', height: '14px', borderRadius: '50%', background: BLUE, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -297,7 +297,7 @@ const ProgressMockup = ({ rotate = -1.5 }: { rotate?: number }) => (
       {/* Next session */}
       <div style={{ padding: '10px 12px', background: 'rgba(212,175,55,0.12)', borderRadius: '12px', border: '1px solid rgba(212,175,55,0.25)', display: 'flex', alignItems: 'center', gap: '10px' }}>
         <div style={{ width: '38px', height: '38px', borderRadius: '8px', overflow: 'hidden', flexShrink: 0 }}>
-          <img src="/dia7.webp" alt="Dia 7" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src="/dia7.webp" alt="Dia 7" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
         <div style={{ flex: 1 }}>
           <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '9px', margin: '0 0 2px', letterSpacing: '1px' }}>PRÓXIMA SESSÃO</p>
@@ -327,6 +327,10 @@ const LandingCodigoDaAbundancia = () => {
 
   useEffect(() => {
     trackEvent('PageView').catch(() => {});
+    // Pré-aquece o servidor Render para evitar cold start no clique de pagamento
+    if (import.meta.env.VITE_BACKEND_URL) {
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/health`, { method: 'GET' }).catch(() => {});
+    }
   }, []);
 
   useEffect(() => {
@@ -341,6 +345,8 @@ const LandingCodigoDaAbundancia = () => {
             contentIds: [PRODUCT_KEY],
             contentType: 'product',
           }).catch(() => {});
+          // Pré-carrega o SDK do MP assim que a seção de oferta fica visível
+          loadMpSdk().catch(() => {});
           observer.disconnect();
         }
       },
@@ -445,6 +451,24 @@ const LandingCodigoDaAbundancia = () => {
     document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const loadMpSdk = (): Promise<void> => {
+    if ((window as any).MercadoPago) return Promise.resolve();
+    // Evitar inserir o script duas vezes se já está carregando
+    const existing = document.querySelector('script[src="https://sdk.mercadopago.com/js/v2"]');
+    if (existing) {
+      return new Promise((resolve) => {
+        existing.addEventListener('load', () => resolve(), { once: true });
+      });
+    }
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://sdk.mercadopago.com/js/v2';
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Falha ao carregar SDK do Mercado Pago'));
+      document.head.appendChild(script);
+    });
+  };
+
   const handleCTA = async () => {
     if (loadingPayment) return;
     setLoadingPayment(true);
@@ -454,17 +478,21 @@ const LandingCodigoDaAbundancia = () => {
       contentIds: [PRODUCT_KEY],
     }).catch(() => {});
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/mp/create-preference`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productKey: 'protocolo_abundancia_7_dias', origin: 'landing_page', siteUrl: import.meta.env.VITE_APP_URL || 'https://ecofrontend888.vercel.app' }),
-      });
-      if (!res.ok) throw new Error('Erro ao criar preferência');
-      const data = await res.json();
+      // Busca a preferência e carrega o SDK ao mesmo tempo
+      const [data] = await Promise.all([
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/mp/create-preference`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productKey: 'protocolo_abundancia_7_dias', origin: 'landing_page', siteUrl: import.meta.env.VITE_APP_URL || 'https://ecofrontend888.vercel.app' }),
+        }).then((res) => {
+          if (!res.ok) throw new Error('Erro ao criar preferência');
+          return res.json();
+        }),
+        loadMpSdk(),
+      ]);
       const publicKey = import.meta.env.VITE_MP_PUBLIC_KEY;
       const preferenceId = data.preference_id ?? new URL(data.init_point).searchParams.get('pref_id');
       if (preferenceId && publicKey) {
-        await loadMpSdk();
         const mp = new (window as any).MercadoPago(publicKey, { locale: 'pt-BR' });
         mp.checkout({ preference: { id: preferenceId }, autoOpen: true });
       } else if (data.init_point) {
@@ -478,17 +506,6 @@ const LandingCodigoDaAbundancia = () => {
     } finally {
       setLoadingPayment(false);
     }
-  };
-
-  const loadMpSdk = (): Promise<void> => {
-    if ((window as any).MercadoPago) return Promise.resolve();
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = 'https://sdk.mercadopago.com/js/v2';
-      script.onload = () => resolve();
-      script.onerror = () => reject(new Error('Falha ao carregar SDK do Mercado Pago'));
-      document.head.appendChild(script);
-    });
   };
 
   const faqs = [
@@ -523,6 +540,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
 }) => (
   <button
     onClick={handleCTA}
+    onPointerEnter={() => loadMpSdk().catch(() => {})}
     disabled={loadingPayment}
     className="cta-btn inline-flex items-center justify-center gap-2 font-bold text-white transition-all hover:opacity-90 hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
     style={{
@@ -564,6 +582,8 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
           <img
             src="/logo-ecotopia.webp"
             alt="Ecotopia"
+            fetchPriority="high"
+            decoding="async"
             style={{ height: '56px', width: 'auto', cursor: 'pointer' }}
             onClick={() => document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' })}
           />
@@ -657,7 +677,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
             <div className="flex items-center justify-center gap-3 mb-8">
               <div className="flex -space-x-2 shrink-0">
                 {['/avatar-fernanda.webp', '/avatar-marcos.webp', '/avatar-camila.webp', '/avatar-extra.webp', '/avatar-fernanda.webp'].map((src, i) => (
-                  <img key={i} src={src} alt="avatar" className="w-7 h-7 sm:w-9 sm:h-9 rounded-full border-2 border-white object-cover bg-gray-200" />
+                  <img key={i} src={src} alt="avatar" loading="lazy" decoding="async" className="w-7 h-7 sm:w-9 sm:h-9 rounded-full border-2 border-white object-cover bg-gray-200" />
                 ))}
               </div>
               <span className="text-sm leading-snug text-left min-w-0" style={{ color: BODY }}>
@@ -763,7 +783,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                   minWidth: '180px',
                   maxWidth: '220px',
                 }}>
-                  <img src="/logo-ecotopia.webp" alt="" style={{ height: '14px', width: 'auto', objectFit: 'contain', flexShrink: 0 }} />
+                  <img src="/logo-ecotopia.webp" alt="" loading="lazy" decoding="async" style={{ height: '14px', width: 'auto', objectFit: 'contain', flexShrink: 0 }} />
                   <span style={{ color: 'rgba(0,0,0,0.7)', fontSize: '11px', fontFamily: "'Inter', sans-serif", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', flex: 1 }}>
                     Código da Abundância
                   </span>
@@ -851,7 +871,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                   <div style={{ flex: '1 1 220px', minWidth: '220px', background: 'rgba(0,0,0,0.45)', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.09)', padding: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                       <div style={{ width: '64px', height: '64px', borderRadius: '12px', overflow: 'hidden', flexShrink: 0, boxShadow: '0 10px 26px rgba(0,0,0,0.55)' }}>
-                        <img src="/dia2.webp" alt="Dia 2" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                        <img src="/dia2.webp" alt="Dia 2" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                       </div>
                       <div style={{ minWidth: 0 }}>
                         <p style={{ margin: 0, color: 'rgba(212,175,55,0.85)', fontSize: '9px', fontFamily: "'Inter', sans-serif", fontWeight: 800, letterSpacing: '0.08em' }}>
@@ -998,7 +1018,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                 <strong style={{ color: BLUE }}>R$4.800 num único cliente.</strong>"
               </p>
               <div className="flex items-center gap-3">
-                <img src="/avatar-fernanda.webp" alt="Fernanda Rocha" className="w-12 h-12 rounded-full object-cover bg-gray-200 flex-shrink-0" />
+                <img src="/avatar-fernanda.webp" alt="Fernanda Rocha" loading="lazy" decoding="async" className="w-12 h-12 rounded-full object-cover bg-gray-200 flex-shrink-0" />
                 <div>
                   <p className="font-semibold text-sm" style={{ color: DARK }}>Fernanda Rocha, 37</p>
                   <p className="text-xs" style={{ color: '#5C5140' }}>Nutricionista autônoma · Curitiba</p>
@@ -1266,7 +1286,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                     </div>
                     <p className="text-sm sm:text-base mb-5 leading-relaxed relative z-10" style={{ color: BODY }}>{t.text}</p>
                     <div className="flex items-center gap-3">
-                      <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full object-cover bg-gray-200 flex-shrink-0" />
+                      <img src={t.avatar} alt={t.name} loading="lazy" decoding="async" className="w-10 h-10 rounded-full object-cover bg-gray-200 flex-shrink-0" />
                       <div>
                         <p className="text-sm font-semibold" style={{ color: DARK }}>{t.name}</p>
                         <p className="text-xs" style={{ color: '#5C5140' }}>{t.role}</p>
@@ -1456,7 +1476,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
         ══════════════════════════════════════════ */}
         <footer className="bg-white border-t px-5 sm:px-6 lg:px-8 py-10" style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
           <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-            <img src="/logo-ecotopia.webp" alt="Ecotopia" className="h-9 w-auto" style={{ opacity: 0.55 }} />
+            <img src="/logo-ecotopia.webp" alt="Ecotopia" loading="lazy" decoding="async" className="h-9 w-auto" style={{ opacity: 0.55 }} />
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
               {['Termos de uso', 'Política de privacidade', 'Contato'].map((link, i, arr) => (
                 <span key={link} className="flex items-center gap-5">
