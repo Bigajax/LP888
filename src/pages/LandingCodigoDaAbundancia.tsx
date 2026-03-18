@@ -509,7 +509,7 @@ const LandingCodigoDaAbundancia = () => {
         fetch(`${import.meta.env.VITE_BACKEND_URL}/api/mp/create-preference`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ productKey: 'protocolo_abundancia_7_dias', origin: 'landing_page', siteUrl: import.meta.env.VITE_APP_URL || 'https://ecofrontend888.vercel.app' }),
+          body: JSON.stringify({ productKey: 'protocolo_abundancia_7_dias', origin: 'landing_page', siteUrl: 'https://lp-888.vercel.app' }),
         }).then((res) => {
           if (!res.ok) throw new Error('Erro ao criar preferência');
           return res.json();
