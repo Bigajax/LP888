@@ -334,6 +334,7 @@ const LandingCodigoDaAbundancia = () => {
       scrollYRef.current = window.scrollY;
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollYRef.current}px`;
       document.body.style.width = '100%';
     } else {
       document.body.style.overflow = '';
