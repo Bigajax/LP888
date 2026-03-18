@@ -315,8 +315,10 @@ const ProgressMockup = ({ rotate = -1.5 }: { rotate?: number }) => (
 
 const LandingCodigoDaAbundancia = () => {
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
-  const [mpModal, setMpModal] = useState<'idle' | 'loading' | 'error'>('idle');
+  const [mpModal, setMpModal] = useState<'idle' | 'loading' | 'checkout' | 'error'>('idle');
   const [mpErrorMsg, setMpErrorMsg] = useState('');
+  const [mpCheckoutUrl, setMpCheckoutUrl] = useState('');
+  const scrollYRef = useRef(0);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
   const [displayCount, setDisplayCount] = useState(0);
@@ -325,6 +327,28 @@ const LandingCodigoDaAbundancia = () => {
   const [metric3Count, setMetric3Count] = useState(0);
   const ofertaRef = useRef<HTMLElement>(null);
   const metricsRef = useRef<HTMLDivElement>(null);
+
+  // Bloqueia scroll do body quando modal de checkout está aberto (iOS Safari)
+  useEffect(() => {
+    if (mpModal === 'checkout' || mpModal === 'loading') {
+      scrollYRef.current = window.scrollY;
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollYRef.current);
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+    };
+  }, [mpModal]);
 
   useEffect(() => {
     trackEvent('PageView').catch(() => {});
@@ -493,16 +517,20 @@ const LandingCodigoDaAbundancia = () => {
       ]);
       const publicKey = import.meta.env.VITE_MP_PUBLIC_KEY;
       const preferenceId = data.preference_id ?? new URL(data.init_point).searchParams.get('pref_id');
-      if (preferenceId && publicKey) {
-        // Fecha nossa modal antes do checkout do MP abrir
-        setMpModal('idle');
+      const isMobile = window.innerWidth < 768 || /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (!data.init_point) throw new Error('Resposta inválida do servidor');
+
+      if (!isMobile && preferenceId && publicKey) {
+        // Desktop: SDK do MP abre o checkout como overlay nativo (igual à screenshot)
         const mp = new (window as any).MercadoPago(publicKey, { locale: 'pt-BR' });
         mp.checkout({ preference: { id: preferenceId }, autoOpen: true });
-      } else if (data.init_point) {
         setMpModal('idle');
-        window.location.href = data.init_point;
       } else {
-        throw new Error('Resposta inválida do servidor');
+        // Mobile: abre o checkout dentro do nosso modal iframe
+        // (o SDK do MP redireciona em mobile, por isso usamos iframe)
+        setMpCheckoutUrl(data.init_point);
+        setMpModal('checkout');
       }
     } catch (err) {
       console.error(err);
@@ -1623,8 +1651,51 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
         }
       `}</style>
 
-      {/* ── Modal de Checkout ── */}
-      {mpModal !== 'idle' && (
+      {/* ── Modal Checkout Mobile (iframe fullscreen) ── */}
+      {mpModal === 'checkout' && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 10000,
+          display: 'flex', flexDirection: 'column',
+          background: '#f5f5f5',
+          fontFamily: "'Inter', sans-serif",
+        }}>
+          {/* Header */}
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            padding: '12px 16px',
+            background: 'white',
+            borderBottom: '1px solid rgba(0,0,0,0.08)',
+            flexShrink: 0,
+            minHeight: '52px',
+          }}>
+            <img src="/logo-ecotopia.webp" alt="Ecotopia" style={{ height: '28px', width: 'auto', opacity: 0.75 }} loading="lazy" decoding="async" />
+            <button
+              onClick={() => setMpModal('idle')}
+              style={{
+                background: 'rgba(0,0,0,0.07)', border: 'none',
+                borderRadius: '50%', width: '32px', height: '32px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', flexShrink: 0,
+              }}
+              aria-label="Fechar"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+          {/* iFrame do checkout MP */}
+          <iframe
+            src={mpCheckoutUrl}
+            style={{ flex: 1, border: 'none', width: '100%' }}
+            allow="payment *; camera *"
+            title="Checkout MercadoPago"
+          />
+        </div>
+      )}
+
+      {/* ── Modal de Loading / Erro ── */}
+      {(mpModal === 'loading' || mpModal === 'error') && (
         <div
           style={{
             position: 'fixed', inset: 0, zIndex: 10000,
