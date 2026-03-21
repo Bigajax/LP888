@@ -819,7 +819,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                   minWidth: '180px',
                   maxWidth: '220px',
                 }}>
-                  <img src="/logo-ecotopia.webp" alt="" loading="lazy" decoding="async" style={{ height: '14px', width: 'auto', objectFit: 'contain', flexShrink: 0 }} />
+                  <img src="/logo-ecotopia.webp" alt="" loading="eager" decoding="async" style={{ height: '14px', width: 'auto', objectFit: 'contain', flexShrink: 0 }} />
                   <span style={{ color: 'rgba(0,0,0,0.7)', fontSize: '11px', fontFamily: "'Inter', sans-serif", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', flex: 1 }}>
                     Código da Abundância
                   </span>
@@ -907,7 +907,7 @@ const CtaBtn = ({ label, white = false, large = false, maxWidth }: {
                   <div style={{ flex: '1 1 220px', minWidth: '220px', background: 'rgba(0,0,0,0.45)', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.09)', padding: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                       <div style={{ width: '64px', height: '64px', borderRadius: '12px', overflow: 'hidden', flexShrink: 0, boxShadow: '0 10px 26px rgba(0,0,0,0.55)' }}>
-                        <img src="/dia2.webp" alt="Dia 2" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                        <img src="/dia2.webp" alt="Dia 2" loading="eager" fetchPriority="high" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                       </div>
                       <div style={{ minWidth: 0 }}>
                         <p style={{ margin: 0, color: 'rgba(212,175,55,0.85)', fontSize: '9px', fontFamily: "'Inter', sans-serif", fontWeight: 800, letterSpacing: '0.08em' }}>

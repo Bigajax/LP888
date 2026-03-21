@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), metaPixelNoscriptPlugin(metaPixelId)],
     build: {
-      target: 'es2015',
+      target: 'es2019',
       rollupOptions: {
         output: {
           manualChunks: {
